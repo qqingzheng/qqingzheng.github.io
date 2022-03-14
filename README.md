@@ -1,3 +1,5 @@
-# Headline
+# QingZheng's Blog
+--------
+> [!ATTENTION] 本博客内容只有记录学习的作用，并无教程意义，所以内容大多粗略。
 
-> An awesome project.
+欢迎来到QingZheng's Blog，笔者是就读于华中科技大学的本科一年级学生，目前参与Dian团队中英特尔5G Beam Management项目。本博客用于记录笔者在大学时期以及未来的学习经历。
