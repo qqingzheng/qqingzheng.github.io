@@ -3,6 +3,8 @@
 + 项目记录
   + Beam Management
     + 基础知识
-      + [NR物理层](contents/project_record/beam_management/NR_physical_layer.md)
-      + [信号调制](contents/project_record/beam_management/NR_modulation.md)
+      + [NR物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
+      + [信号调制](contents/project_record/beam_management/basic_knowledge/NR_modulation.md)
+    + Matlab代码
+      + [代码分析](contents/project_record/beam_management/matlab_code_analysis/code_analysis.md)
 
