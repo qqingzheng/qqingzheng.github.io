@@ -2,7 +2,7 @@
 
 -------
 
-## Tags
+# Tags
 
 <!-- tabs:start -->
 
@@ -36,7 +36,7 @@ https://jhildenbiddle.github.io/docsify-tabs/#/?id=installation
 <!-- tabs:end -->
 
 
-## Panels
+# Panels
 <!-- tabs:start -->
 
 #### **用法**
@@ -83,6 +83,13 @@ https://vagnerdomingues.github.io/docsify-example-panels/#/?id=installation
 
 <!-- tabs:end -->
 
-## Theme
 
-https://jhildenbiddle.github.io/docsify-themeable/#/themes
+# Emoji
+
+https://www.webfx.com/tools/emoji-cheat-sheet/
+
+https://docsify.js.org/#/plugins?id=emoji
+
+# Alerts
+
+https://github.com/fzankl/docsify-plugin-flexible-alerts

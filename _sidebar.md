@@ -3,5 +3,5 @@
 + 项目记录
   + Beam Management
     + 基础知识
-      + [NR物理层](project_record/beam_management/basic_knowledge/NR_physical_layer.md)
+      + [NR物理层](contents/project_record/beam_management/NR_physical_layer.md)
 

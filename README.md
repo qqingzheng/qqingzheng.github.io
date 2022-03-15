@@ -1,4 +1,4 @@
-# QingZheng's Blog
+# QingZheng's Blog :zzz:
 --------
 > [!ATTENTION] 本博客内容只有记录学习的作用，并无教程意义，所以内容大多粗略。
 
