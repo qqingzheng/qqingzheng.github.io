@@ -2,7 +2,9 @@
   + [主题与插件](contents/blog_management/theme_and_plugins.md)
 + AI学习
   + 强化学习
+    + [0-笔记前言](contents/ai/rl/introduction.md)
     + [1-基础概念介绍](contents/ai/rl/basic_concepts.md)
+    + [2-简单数学建模Tic-Tac-Toe](contents/ai/rl/easy_math_modeling.md)
 + 项目记录
   + Beam Management
     + 基础知识

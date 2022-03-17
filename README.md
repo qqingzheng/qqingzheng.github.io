@@ -6,4 +6,6 @@
 
 > [!NOTE] **最新文章**
 > 
-> [[2022/3/15] BM-基础知识-5G物理层](contents/project_record/beam_management/NR_physical_layer.md)
+> [[2022/3/15] BM-基础知识-5G物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
+> 
+> [[2022/3/17] AI-RL-基本概念](contents/ai/rl/basic_concepts.md)
