@@ -39,6 +39,4 @@ weight = weight_data[:,np.arange(0,weight_data.shape[1],2)]+1j*weight_data[:,np.
 ```
 Beam_path代表读取的beams文件路径
 
-weight_data为读入beams矩阵，其形状为32x4，矩阵的0，2列为实部，1，3列为虚部。其中0，1列代表了天线阵子的第一个极化，2，3代表第二个极化。
-
-weight则为32x2的矩阵，其类型为复数。
+weight_data为读入beams的矩阵[32,4]
