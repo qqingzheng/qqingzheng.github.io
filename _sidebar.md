@@ -8,7 +8,12 @@
 + 项目记录
   + Beam Management
     + 基础知识
+      + [BWP-BandwidthPart](http://www.360doc.com/content/21/1226/09/78254863_1010386541.shtml)
       + [NR物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
       + [信号调制](contents/project_record/beam_management/basic_knowledge/NR_modulation.md)
+      + [频域上的基本概念](contents/project_record/beam_management/basic_knowledge/RB,RE,CP.md)
     + 代码分析
       + [Beamforming代码分析](contents/project_record/beam_management/code_analysis/beam_forming.md)
+    + CSI-RS
+      + [基础概念](contents/project_record/beam_management/CSI-RS/basic_knowledge.md)
+      + [参考信号-PMI](contents/project_record/beam_management/CSI-RS/PMI.md)

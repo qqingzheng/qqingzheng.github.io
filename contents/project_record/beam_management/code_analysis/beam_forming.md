@@ -135,11 +135,12 @@ $$
 
 然后**90-H则将水平角位置从y轴表示转移到x轴表示**。
 
+
 ```python
 [H_channel_angles, V_channel_angles] = AngleFromLtoG(H_channel_angles, V_channel_angles, downtilt)
 ```
 
-##### AngleFormToG函数
+**AngleFormToG/sph2cart/cart2sph函数**
 
 ```python
 def AngleFromLtoG(H_angle,V_angle,downtilt):
@@ -151,12 +152,16 @@ def AngleFromLtoG(H_angle,V_angle,downtilt):
        [0,np.cos(downtilt),-np.sin(downtilt)],
        [0,np.sin(downtilt),np.cos(downtilt)]]) 
   R = np.linalg.inv(R)
+  # L = np.array([lx,ly,lz])
+  # L = np.expand_dims(L,0)
+  # L = np.transpose(L)
+  # G = R@L
+  # G = np.transpose(G)
+  # G = G[0]
+  
+  # 利用爱因斯坦求和约定运算
   L = np.array([lx,ly,lz])
-  L = np.expand_dims(L,0)
-  L = np.transpose(L)
-  G = R@L
-  G = np.transpose(G)
-  G = G[0]
+  G = np.einsum("ij,jmn->imn",R,L)
   [H_angle,V_angle,r] = cart2sph(G[0],G[1],G[2]) 
   H_angle = H_angle/pi*180
   V_angle = V_angle/pi*180
@@ -185,6 +190,26 @@ R矩阵的线性变换代表了将原xyz轴坐标系上的坐标变换到x轴不
 
 然后求R的逆矩阵（R是正交矩阵，逆矩阵等于其转置）。
 
-L为(3,161,121)
+求逆矩阵后与空间坐标作矩阵乘法（转置后的正交矩阵做线性变换相当于原向量在原坐标系位置不改变在新坐标系中的坐标；不转置做线性变换相当于原向量改变到新坐标系中在原坐标系的坐标）
 
-a
+最终得到坐标系改变后的坐标。然后重新将其转回角坐标表示（使用cart2sph函数）。然后再通过除$180\pi$回到角度量来表示角位置。
+
+```python
+  H_channel_angles = 90 - H_channel_angles
+  H_channel_angles = np.reshape(H_channel_angles,(-1,1))
+  V_channel_angles = np.reshape(V_channel_angles,(1,-1))
+  V_channel_angles = V_channel_angles.transpose(1,0)
+```
+
+然后重新将水平角度换到y轴来表示，再将原本的矩阵展开为向量。H_channel_angles转为列向量，V_channel_angles转为行向量。
+$$
+
+H_{channelangles}= \begin{bmatrix} 
+-80 & \dots & -80 & -79 & \dots & -79 & \dots & 80 & \dots & 80
+\end{bmatrix}^T \\
+V_{channelangles}= \begin{bmatrix} 
+-60 & -59 \dots & 60 & -60 & -59 & \dots & 60 & \dots
+\end{bmatrix}^T
+
+$$
+他们的形状都是(19481,1)
