@@ -14,6 +14,6 @@
 >
 > [[2022/3/17] AI-RL-基本概念](contents/ai/rl/basic_concepts.md)
 > 
-> [[2022/3/17] AI-RL-前言](contents/ai/rl/introduction.md)
+> [[2022/3/17] AI-RL-前言](contents/ai/rl/introduction.md) 
 >
 > [[2022/3/18 AI-RL-简单的优化问题]](contents/ai/rl/easy_math_modeling.md)

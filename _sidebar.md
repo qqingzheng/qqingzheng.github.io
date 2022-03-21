@@ -8,6 +8,7 @@
 + 项目记录
   + Beam Management
     + 基础知识
+      + [slide4math直观地查看数学运算](http://www.slide4math.com/)
       + [BWP-BandwidthPart](http://www.360doc.com/content/21/1226/09/78254863_1010386541.shtml)
       + [KroneckerProduct-克罗内克积](https://mathworld.wolfram.com/KroneckerProduct.html)
       + [NR物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)

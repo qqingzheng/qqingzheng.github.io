@@ -55,10 +55,21 @@ $N_1,N_2$指的是水平和垂直方向的天线数量$O_1,O_2$与**DFT Oversamp
 可以发现，$i_{1,x}$决定了宽带（wideband）属性，$i_2$决定了子带（subband）属性。而$i_3$在多层layers的时候需要（暂时不知道有啥用）。
 
 下面是$W_1$的计算过程，可以发现，矩阵的大小和天线的结构有关。这个矩阵的每一列代表了一个antenna array产生的beam。
-
+（这个图片有个错误$u_m$分子上的$N_1$应改为$N_2$）
 ![](img/06.png)
 
-$W_2$则代表了beam的选择。
+经过Kronecker积后，得到$W_1$的形状是$2N_1N_2\times 2$
+
+$W_2$功能是对$W_1$中的beams进行选择选择。
+
+下面的图片说明了W的计算方式：
+![](img/07.png)
+![](img/08.png)
+
+## 生成W矩阵
+
+太多了，先到sharetechnote看吧
+
 ### PMI配置
 
 ![](https://img-blog.csdnimg.cn/20200331161600836.png)
