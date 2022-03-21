@@ -7,7 +7,13 @@
 > [!NOTE] **最新文章**
 > 
 > [[2022/3/15] BM-基础知识-5G物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
-> 
+>
+> [[2022/3/21] BM-CSI-RS码本](contents/project_record/beam_management/CSI-RS/codebook.md)
+>
+> [[2022/3/20] BM-代码分析](contents/project_record/beam_management/CSI-RS/codebook.md)
+>
 > [[2022/3/17] AI-RL-基本概念](contents/ai/rl/basic_concepts.md)
 > 
 > [[2022/3/17] AI-RL-前言](contents/ai/rl/introduction.md)
+>
+> [[2022/3/18 AI-RL-简单的优化问题]](contents/ai/rl/easy_math_modeling.md)
