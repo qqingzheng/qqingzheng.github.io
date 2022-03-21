@@ -70,27 +70,45 @@ $W_2$功能是对$W_1$中的beams进行选择选择。
 
 太多了，先到sharetechnote看吧
 
-### PMI配置
+## PMI配置
 
 ![](https://img-blog.csdnimg.cn/20200331161600836.png)
 
-#### typeI-SinglePanel-ri-Restriction
+## 码本表
 
-这是一个8比特的序列，$r_7,r_6,\dots,r_0$，其中$r_0$是LSB。如果$r_i$是0，那么PMI和RI不允许上报到任何与层数$v=i+1$相关的precoder不允许上报。
+### 端口为2
 
-#### 两个端口的情况
+#### Layer1或Layer2
 
-codebookType（这是更高层的参数）会明确配置Type I并且是Type I-SinglePanel。如果nrOfAntennaPorts=2时，那么只能选择layer1和layer2，这样场景就比较简单。此时参数twoTX-CodebookSubsetRestriction有6个bit。如果gNB向终端发送的bits map中的某一位置0，意思为不允许终端使用这个码本。
 ![](https://img-blog.csdnimg.cn/20200331162022735.png)
 
-#### 大于两个端口的情况
+### 端口大于2
 
 条件：nrOfAntennaPorts=4,8,12,16,24,32。并且UE将codebookType配置为TypeI-SinglePannel。
 
-##### n1-n2参数
+#### Layer1
 
-n1-n2也是bitmap，bit序列为$a_{A_c-1},\dots,a_1,a_0$，其中$a_0$是LSB。其中如果有bit置0，则代表与这个bit相关联的precoder不允许被上报。其中$A_c = N_1N_1O_1O_2$，但是当层数$v \in \{3,4\}$并且天线端口数量为16, 24, or 32，比特$a_{N_2O_2l+m}$与基于$v_{l,m}(l=0,\dots,N_1O_1-1, m=0,\dots,N_2O_2-2)$的所有的precoder相关联。
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_5_CodebookMode_1.png)
 
-#### typeI-SinglePanel-codebookSubsetRestriction-i2
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_5_CodebookMode_2_N2_GT_1.png)
 
-若高层参数reportQuantity配置为cri-RI-i1-CQI。则bitmap参数typeI-SinglePanel-codebookSubsetRestriction-i2会生成16个bit的序列$b_15,b_14,\dots,b_0$，其中$b_i$与$i_2 = i$的码本索引对应。当$b_i$为0时，为CQI计算随机选择的precoder不允许上报到任何与$b_i$相关联的precoder上。
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_5_CodebookMode_2_N2_EQ_1.png)
+
+### Layer2
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_6_CodebookMode_1.png)
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_3.png)
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_6_CodebookMode_2_N2_GT_1.png)
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_6_CodebookMode_2_N2_EQ_1.png)
+
+### Layer3
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_7_CodebookMode_1.png)
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_7_CodebookMode_2.png)
+
+![](https://www.sharetechnote.com/html/5G/image/38_214_Table_5_2_2_2_1_4.png)
+
