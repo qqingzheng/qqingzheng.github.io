@@ -1,5 +1,11 @@
 + 博客管理
   + [主题与插件](contents/blog_management/theme_and_plugins.md)
++ 数学基础
+  + [slide4math直观地查看数学运算](http://www.slide4math.com/)
+  + 复数
+    + [复数的概念与运算](contents/math_basic/complex_number/concept.md)
+  + 线性代数
+    + [Kronecker积](contents/math_basic/linear_algebra/kronecker_product.md)
 + AI学习
   + 强化学习
     + [0-笔记前言](contents/ai/rl/introduction.md)
@@ -8,14 +14,14 @@
 + 项目记录
   + Beam Management
     + 基础知识
-      + [slide4math直观地查看数学运算](http://www.slide4math.com/)
       + [BWP-BandwidthPart](http://www.360doc.com/content/21/1226/09/78254863_1010386541.shtml)
-      + [KroneckerProduct-克罗内克积](https://mathworld.wolfram.com/KroneckerProduct.html)
       + [NR物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
       + [信号调制](contents/project_record/beam_management/basic_knowledge/NR_modulation.md)
       + [频域上的基本概念](contents/project_record/beam_management/basic_knowledge/RB,RE,CP.md)
     + 代码分析
       + [Beamforming代码分析](contents/project_record/beam_management/code_analysis/beam_forming.md)
+    + 波束
+      + [波束成形](contents/project_record/beam_management/Beamforming/beamforming.md)
     + CSI-RS
       + [基础概念](contents/project_record/beam_management/CSI-RS/basic_knowledge.md)
       + [CSI-RS码本](contents/project_record/beam_management/CSI-RS/codebook.md)

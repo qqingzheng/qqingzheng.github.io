@@ -98,7 +98,7 @@ $$
 > VAnt_pos = np.reshape(VAnt_pos,(1,-1))
 > ```
 
-对于垂直方向最后也同理得到$\textbf{D}_v = [0,d_{1v},d_{2v},\dots,d_{7v},\dots,0,d_{1v},d_{2v},\dots,d_{7v}]$。
+对于垂直方向最后也同理得到$\textbf{D}_v = [0,\dots,d_{1v},\dots,d_{1v},\dots,d_{h3v},\dots,d_{h3v}]$。
 
 #### 计算信道角度
 ```python
@@ -201,7 +201,7 @@ R矩阵的线性变换代表了将原xyz轴坐标系上的坐标变换到x轴不
   V_channel_angles = V_channel_angles.transpose(1,0)
 ```
 
-然后重新将水平角度换到y轴来表示，再将原本的矩阵展开为向量。H_channel_angles转为列向量，V_channel_angles转为行向量。
+然后重新将水平角度换到y轴来表示，再将原本的矩阵展开为向量。H_channel_angles转为列向量，V_channel_angles转为行向量再转置的到列向量。
 $$
 
 H_{channelangles}= \begin{bmatrix} 
@@ -213,3 +213,17 @@ V_{channelangles}= \begin{bmatrix}
 
 $$
 他们的形状都是(19481,1)
+
+## 计算信道
+
+![](img/01.png)
+
+由于上面图片的情况是在二维上的，而代码是在三维，因此可以类比到三维得到公式：
+；
+
+使用公式
+$$
+
+channel = e^{(2\pi f)i}
+
+$$

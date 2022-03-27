@@ -6,4 +6,4 @@
 
 ## RE - Resource Element
 
-频域上一个子载波
+频域上一个子载波，时域上一个symbol，成为一个RE。
