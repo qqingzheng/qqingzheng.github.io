@@ -30,6 +30,7 @@
       + [Beamforming代码分析](contents/project_record/beam_management/code_analysis/beam_forming.md)
     + 波束
       + [波束成形的理解](contents/project_record/beam_management/Beamforming/beamforming.md)
+      + [波束管理](contents/project_record/beam_management/Beamforming/beam_management.md)
     + CSI-RS
       + [基础概念](contents/project_record/beam_management/CSI-RS/basic_knowledge.md)
       + [CSI-RS码本](contents/project_record/beam_management/CSI-RS/codebook.md)

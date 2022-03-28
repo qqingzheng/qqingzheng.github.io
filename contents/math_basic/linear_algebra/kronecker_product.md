@@ -1,6 +1,6 @@
 # Kronecker积
 
-> ![TIP] [数学概念] https://mathworld.wolfram.com/KroneckerProduct.html
+> [!TIP] [数学概念] https://mathworld.wolfram.com/KroneckerProduct.html
 
 ## Numpy实现
 
