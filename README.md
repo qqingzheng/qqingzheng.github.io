@@ -2,18 +2,8 @@
 --------
 > [!ATTENTION] 本博客内容只有记录学习的作用，并无教程意义，所以内容大多粗略。
 
-欢迎来到QingZheng's Blog，笔者是就读于华中科技大学的本科一年级学生，目前参与Dian团队中英特尔5G Beam Management项目。本博客用于记录笔者在大学时期以及未来的学习经历。
+欢迎来到QingZheng's Blog，我是就读于华中科技大学的大一学生，目前参与Dian团队中英特尔5G Beam Management项目。本博客用于记录我在大学时期以及未来的学习经历。
 
 > [!NOTE] **最新文章**
 > 
-> [[2022/3/15] BM-基础知识-5G物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
->
-> [[2022/3/21] BM-CSI-RS码本](contents/project_record/beam_management/CSI-RS/codebook.md)
->
-> [[2022/3/20] BM-代码分析](contents/project_record/beam_management/CSI-RS/codebook.md)
->
-> [[2022/3/17] AI-RL-基本概念](contents/ai/rl/basic_concepts.md)
-> 
-> [[2022/3/17] AI-RL-前言](contents/ai/rl/introduction.md) 
->
-> [[2022/3/18 AI-RL-简单的优化问题]](contents/ai/rl/easy_math_modeling.md)
+> [[2022/3/27] BM-波束-波束成形](contents/project_record/beam_management/Beamforming/beamforming.md)
