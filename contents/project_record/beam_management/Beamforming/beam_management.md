@@ -11,12 +11,12 @@
 
 ## UE和基站如何建立联系？
 
-### 总览
-
 换句话说，基站与UE之间如何找到相互之间的位置（方向）。为了与UE建立联系，基站会发送**Synchronization Signal**，并且这个信号需要传输给基站附近所有的UE。问题来了，由于基站使用波束赋形来发送信号，那么基站的信号就无法覆盖很广的范围。
+
 ![](https://www.sharetechnote.com/html/5G/image/NR_BeamManagement_Overview_03.png)
 
 在当前，最流行的方法是：让基站对着空间不同方向发送信号进行扫描来与UE建立联系
+
 ![](https://www.sharetechnote.com/html/5G/image/NR_BeamManagement_Overview_05.png)
 
 基站与UE产生波束联系的方式有很多，sharetechnote中给出了以下四种情况（其实不止）：
@@ -32,3 +32,15 @@
 Beam Management大致在以下两个过程起作用：一个是RACH（随机接入）过程，另一个是介入后的过程。
 
 ![](https://www.sharetechnote.com/html/5G/image/NR_BeamManagement_InNutshell_01.png)
+
+### 如何选择Beam
+
+#### 传输阶段
+
+在传输数据时，UE和基站都需要找到最好质量的方向去传输信号。那么他们如何找到最好的方向呢？
+
+当基站在传输时：基站通过参考信号的评估来选择。基站会在UE发出的参考信号（以不同的beam发出）中，选择最好的那个。这个来自UE的参考信号被称为SRS。
+
+当UE在传输时：过程与基站差不多，不过来自基站的参考信号有时是SSB，有时是CSI-RS
+
+
