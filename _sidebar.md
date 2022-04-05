@@ -28,7 +28,8 @@
       + [信号调制](contents/project_record/beam_management/basic_knowledge/NR_modulation.md)
       + [频域上的基本概念](contents/project_record/beam_management/basic_knowledge/RB,RE,CP.md)
     + 代码分析
-      + [Beamforming代码分析](contents/project_record/beam_management/code_analysis/beam_forming.md)
+      + [Generate DFT Beams](contents/project_record/beam_management/code_analysis/generate_dft_beam.md)
+      + [Get Channel](contents/project_record/beam_management/code_analysis/get_channel.md)
     + 波束
       + [波束成形的理解](contents/project_record/beam_management/Beamforming/beamforming.md)
       + [波束管理](contents/project_record/beam_management/Beamforming/beam_management.md)
