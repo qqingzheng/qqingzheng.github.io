@@ -27,7 +27,7 @@ Beamfroming利用波的干涉机制。当多个波共相位时，会发生叠加
 假设两个天线之间距离是$d$。假设天线发送数据到很远处的一个接受者，那么他们之间的连线可以看作是平行的。假设发射信号的方向与竖直方向的夹角为$\theta$。那么他们发出的波的距离差为$\tau = dsin\theta$，这个距离也表示了两个波之间的延迟。
 
 > [!TIP] 已知两个天线之间的距离d和频率f，计算两个波之间的相位：
-> $\Delta p=e^{j(2\pi f\frac{dsin\theta}{c})}=e^{j(2\pi \frac{dsin\theta}{\lambda})}$。如果$d=2\pi\lambda$，那么就可以得到$\Delta p=e^{jdsin\theta}=e^{j\tau}$
+> $\Delta p=e^{j(2\pi f\frac{dsin\theta}{c})}=e^{j(2\pi \frac{dsin\theta}{\lambda})}$。如果$d=\frac{\lambda}{2\pi}，$那么就可以得到$\Delta p=e^{jdsin\theta}=e^{j\tau}$
 
 因此我们将每个天线发射的信号调整相位，使信号在接受端发生叠加：
 
