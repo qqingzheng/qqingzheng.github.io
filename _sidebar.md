@@ -22,7 +22,7 @@
     + [2-简单优化问题Tic-Tac-Toe](contents/ai/rl/easy_math_modeling.md)
 + 项目记录
   + Beam Management
-    + 基础知识
+    + 暂时不知道怎么分类的知识
       + [BWP-BandwidthPart](http://www.360doc.com/content/21/1226/09/78254863_1010386541.shtml)
       + [NR物理层](contents/project_record/beam_management/basic_knowledge/NR_physical_layer.md)
       + [信号调制](contents/project_record/beam_management/basic_knowledge/NR_modulation.md)
@@ -34,4 +34,4 @@
       + [波束管理](contents/project_record/beam_management/Beamforming/beam_management.md)
     + CSI-RS
       + [基础概念](contents/project_record/beam_management/CSI-RS/basic_knowledge.md)
-      + [CSI-RS码本](contents/project_record/beam_management/CSI-RS/codebook.md)
+      + [PMI码本](contents/project_record/beam_management/CSI-RS/codebook.md)
