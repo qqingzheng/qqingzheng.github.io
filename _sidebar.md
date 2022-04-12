@@ -1,4 +1,3 @@
-+ [临时](contents/1.md)
 + 博客管理
   + [主题与插件](contents/blog_management/theme_and_plugins.md)
   + Markdown
@@ -9,6 +8,10 @@
     + [第四节 链接、图片](contents/blog_management/markdown/5.md)
     + [第五节 代码、表格](contents/blog_management/markdown/6.md)
     + [第六节 LaTex数学公式](contents/blog_management/markdown/7.md)
++ 计算机系统
+  + 基础
+    + [内存介绍](contents/OS/basic/memoryIntroduction.md)
+    + [i386寄存器C语言结构](contents/OS/basic/i386_register.md)
 + 数学基础
   + [slide4math直观地查看数学运算](http://www.slide4math.com/)
   + 复数
