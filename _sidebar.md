@@ -39,6 +39,8 @@
     + CSI-RS
       + [基础概念](contents/project_record/beam_management/CSI-RS/basic_knowledge.md)
       + [PMI码本](contents/project_record/beam_management/CSI-RS/codebook.md)
+    + 论文笔记
+      + [Machine-Learning Beam Tracking and Weight Optimization for mmWave Multi-UAV Links](contents/project_record/beam_management/paper_read/Machine-Learning-BeamTracking.md)
 + 计算机系统基础
   + [Makefile](https://seisman.github.io/how-to-write-makefile/introduction.html#id1)
   + [jyy-wiki](http://jyywiki.cn/)
