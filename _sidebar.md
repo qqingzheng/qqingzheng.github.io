@@ -9,6 +9,17 @@
     + [第五节 代码、表格](contents/blog_management/markdown/6.md)
     + [第六节 LaTex数学公式](contents/blog_management/markdown/7.md)
 + 计算机
+  + 工具
+    + Cmake
+      * [第零节 cmake简介](contents/cs/utils/cmake/0.md)
+      * [第一节 试试编译](contents/cs/utils/cmake/1.md)
+      * [第二节 编译多个源文件](contents/cs/utils/cmake/2.md)
+      * [第三节 编译不同目录的多个源文件](contents/cs/utils/cmake/2.md)
+      * [第四节 编译动态库和静态库](contents/cs/utils/cmake/3.md)
+      * [第五节 链接外部库](contents/cs/utils/cmake/4.md)
+    + g++
+      * [第零节 编译原理](study/Linux/g++/0.md)
+      * [第一节 动态库链接](study/Linux/g++/1.md)
   + 计算机系统基础
     + [Makefile](https://seisman.github.io/how-to-write-makefile/introduction.html#id1)
     + [jyy-wiki](http://jyywiki.cn/)
