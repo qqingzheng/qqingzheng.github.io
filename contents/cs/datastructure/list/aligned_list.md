@@ -1,122 +1,38 @@
 # 数组（顺序表）
 
+## 编写过程遇到的问题
+
+> [!WARNING] 
+> https://www.freesion.com/article/17501409867/ - 模板类声明与定义位置的问题
+> 总结：模板在编译过程中就会更换为特定的类型，但是Array.cpp在编译过程中编译器不清楚模板类型，就会导致模板并没有具体的类型，从而在与test.cpp链接时出现`undefined reference to `arrayList<int>::empty() const'`
+> 解决方法：把定义放在头文件
+
 ## 索引到内存位置的映射
 
 $$locate(i) = i$$
 
 > [!NOTE] 可以将这个映射改变以达到不同的效果，例如$locate(i) = arrayLength - i - 1$则代表反向储存。
 
-## 动态一维数组
+## 复杂度分析
 
+### 插入操作
 
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "base.h"
-#define IF_IN_SCOPE(A,B,TARGET) A<=TARGET && TARGET<B
-
-
-typedef struct{
-    #define LIST_LENGTH 100
-    #define LIST_EXPAND_LENGTH 10
-    ElemType* base;
-    unsigned int length; // current length of the list    
-    unsigned int max_length;
-} Mylist;
-
-Status InitList(Mylist* list){
-    list->length = 0;
-    list->max_length = LIST_LENGTH;
-    list->base = (ElemType*) malloc(sizeof(ElemType)*LIST_LENGTH);
-    if(!list->base) return ERROR;
-    return SUCCESS;
-}
-
-Status DestroyList(Mylist* list){
-    free(list->base);
-    return SUCCESS;
-}
-
-Status ClearList(Mylist* list){
-    memset(list->base, 0, sizeof(list->length*sizeof(ElemType)));
-    return SUCCESS;
-}
-
-int ListLength(Mylist* list){
-    return list->length;
-}
-
-Status ListEmpty(Mylist* list){
-    if(list->base == 0 || list-> length == 0){
-        return SUCCESS;
-    }else{
-        return ERROR;
+```cpp
+template<class T>
+void arrayList<T>::insert(int index,const T& elem){
+    checkIndex(index);
+    if (listSize == arrayCapacity){
+        changeSpace(listSize, listSize*2);
+        arrayCapacity *= 2;
     }
+    std::copy(array+index, array+listSize,array+index+1);
+    listSize += 1;
+    array[index] = T(elem);
 }
-
-ElemType GetElem(Mylist* list, int index){
-    // Complexity O(1)
-    if(index >= list->length) exit(EXIT_ERROR);
-    return *(list->base + index);
-}
-
-int LocateElem(Mylist* list, ElemType elem){
-    // Complexity O(n)
-    int i;
-    for(i = 0; i < list->length; ++i){
-        if(list->base[i] == elem){
-            return i;
-        }
-    }
-    return -1;
-}
-
-Status ListInsert(Mylist* list, int index,ElemType elem){
-    // Complexity O(n)
-    if(!IF_IN_SCOPE(0,list->length,index)) exit(EXIT_ERROR);
-    if(list->length == list->max_length){
-        list->base = (ElemType*) realloc(list->base,sizeof(ElemType)*LIST_EXPAND_LENGTH);
-        if(!list->base) exit(EXIT_ERROR);
-        list->max_length += LIST_EXPAND_LENGTH;
-    }
-    
-    // move elements a[i-1] = a[i]
-    int i;
-    for(i = list->length; i > index; --i){
-        list->base[i] = list->base[i-1];
-    }
-    ++list->length;
-    list->base[index] = elem;
-    return SUCCESS;
-}
-
-Status ListDelete(Mylist* list, int index){
-    // Complexity O(n)
-    if(!IF_IN_SCOPE(0,list->length,index)) exit(EXIT_ERROR);
-    // move elements a[i] = a[i+1]
-    int i;
-    for(i = index; i < list->length; ++i){
-        list->base[i] = list->base[i+1];
-    }
-    --list->length;
-    return SUCCESS;
-
-}
-
-
-int main(){
-    Mylist list;
-    InitList(&list);
-    ListInsert(&list,0,1);
-    ListInsert(&list,0,2);
-    ListInsert(&list,0,3);
-    ListDelete(&list,0);
-    printf("%d",GetElem(&list,0));
-    return 0;
-}
-
-
-
 ```
+
+> [!NOTE] **定理5-1: 若数组增长时新的长度为旧的长度乘以某个乘数因子，那么线性表的插入操作复杂度为O(n)，其中n为列表长度。**
+> 
+> 证明：假设列表初始长度为1，且每次插入都在列表尾部插入，插入$n=2^k+1$次，那么其复杂度为$\Theta(1*n)=\Theta(n)$。如果每次插入都增加1的空间，那么每次插入增加空间所需要的复杂度为$\Theta(\sum^{n-1}_{i=1}i)=\Theta(n^2)$。所以n次插入总的需要的时间是$\Theta(n^2)$。
+> 
+> 但是呈倍数增加数组长度，那么就需要$k$次扩大数组，而$k=log_2(n-1)$，所以扩大数组需要的复杂度为$\Theta(logn)$。所以最终时间复杂度为$O(n)$。
