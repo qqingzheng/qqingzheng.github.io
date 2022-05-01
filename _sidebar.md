@@ -29,6 +29,10 @@
     + [union和struct](contents/cs/os/basic/union_and_struct.md)
     + [字节对齐](contents/cs/os/basic/byte_alignment.md)
   + 数据结构
+    + [前言](contents/cs/datastructure/0.md)
+    + [第一章 重拾C++](contents/cs/datastructure/1.md)
+    + [第二章 程序性能分析](contents/cs/datastructure/1.md)
+    + [第三章 渐进记法](contents/cs/datastructure/1.md)
     + 线性表
       + [顺序表](contents/cs/datastructure/list/aligned_list.md)
       + [单向链表](contents/cs/datastructure/list/vector.md)
