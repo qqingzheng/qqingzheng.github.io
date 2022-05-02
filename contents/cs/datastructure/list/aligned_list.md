@@ -7,6 +7,61 @@
 > 总结：模板在编译过程中就会更换为特定的类型，但是Array.cpp在编译过程中编译器不清楚模板类型，就会导致模板并没有具体的类型，从而在与test.cpp链接时出现`undefined reference to `arrayList<int>::empty() const'`
 > 解决方法：把定义放在头文件
 
+> [!WARING]
+> 返回模板类需要加上typename
+```cpp
+template <class T>
+typename arrayList<T>::iterator& arrayList<T>::iterator::operator++()
+{
+    position += 1;
+    return *this;
+}
+```
+
+
+## 新知识
+
+1. 使用STL中的copy函数可以进行内存的复制。
+2. 如何写exception类：
+```cpp
+#ifndef _illegalParameterValue
+#define _illegalParameterValue
+#include <string>
+class illegalParameterValue{
+    public:
+        illegalParameterValue(std::string msg) { this->msg = msg; }
+        illegalParameterValue(const char * msg) { this->msg = msg; }
+    private:
+        std::string msg;
+};
+#endif
+```
+3. 在erase时要记得析构。
+4. 迭代器的编写：有了迭代器才可以使用很多STL库中的函数。
+```cpp
+// 迭代器
+class iterator
+{
+public:
+    // 前面几个是C++必须要加的
+    typedef std::bidirectional_iterator_tag iterator_category; 
+    typedef ptrdiff_t difference_type;
+    typedef T value_type;
+    typedef T *pointer;
+    typedef T &reference;
+    iterator(value_type *thePosition = 0) { position = thePosition; };
+    value_type &operator*() const { return *position; }
+    value_type *operator->() const { return &*position; } // 一个特殊的取指针方式
+    iterator &operator++();                               // 前置自加
+    iterator operator++(int);                             // 后置自加
+    iterator &operator--();
+    iterator operator--(int);
+    bool operator!=(const iterator &right) const;
+    bool operator==(const iterator &right) const;
+protected:
+    pointer position;
+};
+```
 ## 索引到内存位置的映射
 
 $$locate(i) = i$$

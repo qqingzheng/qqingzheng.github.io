@@ -13,4 +13,4 @@ $(DIRS_BUILD)/%.o: %.cpp
 $(DIRS):
 	@mkdir $@
 clean:
-	@rm -rf $(DIRS)
+	@rm -rf $(DIRS) $(EXE)
