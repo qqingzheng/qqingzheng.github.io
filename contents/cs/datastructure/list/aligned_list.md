@@ -21,7 +21,7 @@ typename arrayList<T>::iterator& arrayList<T>::iterator::operator++()
 
 ## 新知识
 
-1. 使用STL中的copy函数可以进行内存的复制。
+1. 使用STL中的copy函数可以进行从前向后的复制，还有copy_backward函数可以实现从后向前的复制。
 2. 如何写exception类：
 ```cpp
 #ifndef _illegalParameterValue

@@ -1,16 +1,15 @@
 CC = g++
-DIRS = build
-DIRS_BUILD = build
+DIRS = run
+DIR_RUN = run
 HEADERS = $(wildcard *.h)
 CPP_FILES = $(wildcard *.cpp)
-OBJS = $(addprefix $(DIRS_BUILD)/, $(CPP_FILES:.cpp=.o))
-EXE = test
-all: $(DIRS) $(EXE)
-$(EXE): $(OBJS)
-	$(CC) $^ -o $@
-$(DIRS_BUILD)/%.o: %.cpp
-	$(CC) -c $^ -o $@
+EXES = $(addprefix $(DIR_RUN)/, $(CPP_FILES:.cpp=.out))
+all: $(DIRS) $(EXES)
+$(DIR_RUN)/%.out: %.o
+	@$(CC) $^ -o $@
+%.o: %.cpp
+	@$(CC) -c $^ -o $@
 $(DIRS):
 	@mkdir $@
 clean:
-	@rm -rf $(DIRS) $(EXE)
+	@rm -rf $(DIRS) $(EXES)

@@ -157,7 +157,7 @@ void arrayList<T>::insert(int index, const T &elem)
         changeSpace(listSize, listSize * 2);
         arrayCapacity *= 2;
     }
-    std::copy(array + index, array + listSize, array + index + 1);
+    std::copy_backward(array + index, array + listSize, array + index + 1);
     listSize += 1;
     array[index] = T(elem);
 }
