@@ -1,4 +1,50 @@
-# 数组（顺序表）
+# 数组
+
+## 代码实现
+
+位于`contents/cs/datastructure/list/implements`文件夹中
+
+## 类型
+
++ arrayList
++ vectorList（使用STL中的vector来实现的list）
++ multiList （多个表映射到一个表上，详细可以看P109）
+
+## 数组的具体内容
+
+### 数组的优缺点
+
+由于数组索引即元素在内存中与首元素的偏移量（索引可以直接映射到内存地址上），所以查找的时间复杂度为$\Theta(1)$。适用于需要大量查找，且元素数量较为固定或操作通常在数组末端（因为数组的插入与删除n次的时间复杂度为$O(n^2)$）的场景。
+
+### 索引到内存位置的映射
+
+$$locate(i) = i$$
+
+> [!NOTE] 可以将这个映射改变以达到不同的效果，例如$locate(i) = arrayLength - i - 1$则代表反向储存。
+
+### 复杂度分析
+
+#### 插入操作
+
+```cpp
+template<class T>
+void arrayList<T>::insert(int index,const T& elem){
+    checkIndex(index);
+    if (listSize == arrayCapacity){
+        changeSpace(listSize, listSize*2);
+        arrayCapacity *= 2;
+    }
+    std::copy(array+index, array+listSize,array+index+1);
+    listSize += 1;
+    array[index] = T(elem);
+}
+```
+
+> [!NOTE] **定理5-1: 若数组增长时新的长度为旧的长度乘以某个乘数因子，那么线性表的插入操作复杂度为O(n)，其中n为列表长度。**
+> 
+> 证明：假设列表初始长度为1，且每次插入都在列表尾部插入，插入$n=2^k+1$次，那么其复杂度为$\Theta(1*n)=\Theta(n)$。如果每次插入都增加1的空间，那么每次插入增加空间所需要的复杂度为$\Theta(\sum^{n-1}_{i=1}i)=\Theta(n^2)$。所以n次插入总的需要的时间是$\Theta(n^2)$。
+> 
+> 但是呈倍数增加数组长度，那么就需要$k$次扩大数组，而$k=log_2(n-1)$，所以扩大数组需要的复杂度为$\Theta(logn)$。所以最终时间复杂度为$O(n)$。
 
 ## 编写过程遇到的问题
 
@@ -62,32 +108,4 @@ protected:
     pointer position;
 };
 ```
-## 索引到内存位置的映射
-
-$$locate(i) = i$$
-
-> [!NOTE] 可以将这个映射改变以达到不同的效果，例如$locate(i) = arrayLength - i - 1$则代表反向储存。
-
-## 复杂度分析
-
-### 插入操作
-
-```cpp
-template<class T>
-void arrayList<T>::insert(int index,const T& elem){
-    checkIndex(index);
-    if (listSize == arrayCapacity){
-        changeSpace(listSize, listSize*2);
-        arrayCapacity *= 2;
-    }
-    std::copy(array+index, array+listSize,array+index+1);
-    listSize += 1;
-    array[index] = T(elem);
-}
-```
-
-> [!NOTE] **定理5-1: 若数组增长时新的长度为旧的长度乘以某个乘数因子，那么线性表的插入操作复杂度为O(n)，其中n为列表长度。**
-> 
-> 证明：假设列表初始长度为1，且每次插入都在列表尾部插入，插入$n=2^k+1$次，那么其复杂度为$\Theta(1*n)=\Theta(n)$。如果每次插入都增加1的空间，那么每次插入增加空间所需要的复杂度为$\Theta(\sum^{n-1}_{i=1}i)=\Theta(n^2)$。所以n次插入总的需要的时间是$\Theta(n^2)$。
-> 
-> 但是呈倍数增加数组长度，那么就需要$k$次扩大数组，而$k=log_2(n-1)$，所以扩大数组需要的复杂度为$\Theta(logn)$。所以最终时间复杂度为$O(n)$。
+5. 其实STL中的vector也是个动态长度的数组，不是链表。

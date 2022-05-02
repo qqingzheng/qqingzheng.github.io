@@ -1,6 +1,6 @@
 #ifndef _arrayList
 #define _arrayList
-#include "ADT.h"
+#include "linearList_ADT.h"
 #include "exception.h"
 #include <iostream>
 #include <algorithm>
