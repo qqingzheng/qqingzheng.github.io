@@ -103,8 +103,8 @@ arrayList<T>::arrayList(int initialCapacity)
     {
         throw illegalParameterValue("initialCapacity must be > 0");
     }
-    array = new T[arrayCapacity];
     arrayCapacity = initialCapacity;
+    array = new T[arrayCapacity];
     listSize = 0;
 }
 template <class T>
