@@ -4,5 +4,5 @@
     "commandLimit": true,
     "whiteListPlayer": "qingzheng",
     "illegalCmd": "pokeedit,pokegive,points give,money give,op",
-    "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON"
+    "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE"
 }
