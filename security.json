@@ -1,4 +1,5 @@
 {
     "startMoveSleep": false,
-    "permitUseAPI": true
+    "permitUseAPI": true,
+    "commandLimit": true
 }
