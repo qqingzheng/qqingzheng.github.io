@@ -1,5 +1,7 @@
 {
     "startMoveSleep": false,
     "permitUseAPI": true,
-    "commandLimit": true
+    "commandLimit": true,
+    "illegalCmd": "pokeedit,pokegive,points give,money give,op,pp",
+    "illegalItem": "PIXELMON_POKEMON_EDITOR"
 }
