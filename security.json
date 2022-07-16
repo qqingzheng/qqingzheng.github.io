@@ -3,8 +3,8 @@
     "permitConsoleCommand": false,
     "allowReloadLimitPlugin": false,
     "permitUseAPI": true,
-    "commandLimit": true,
+    "commandLimit": false,
     "whiteListPlayer": "qingzheng2",
-    "illegalCmd": "pokeedit,pokegive,points give,money give,op,pokespawn,pchip vgive",
+    "illegalCmd": "pokeedit,pokegive,points give,money give,pokespawn,pchip vgive",
     "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE"
 }
