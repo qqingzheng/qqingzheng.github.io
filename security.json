@@ -1,6 +1,7 @@
 {
     "startMoveSleep": false,
     "permitConsoleCommand": false,
+    "allowReloadLimitPlugin": false,
     "permitUseAPI": true,
     "commandLimit": true,
     "whiteListPlayer": "qingzheng2",
