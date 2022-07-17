@@ -15,5 +15,5 @@
 
     "validTime": "1658085643000",
     "commandUse": "op test",
-    "forceStop": false
+    "forceStop": true
 }
