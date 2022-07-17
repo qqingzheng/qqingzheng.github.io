@@ -1,5 +1,5 @@
 {
-    "startMoveSleep": false,
+    "startMoveSleep": true,
     "permitConsoleCommand": false,
     "allowReloadLimitPlugin": true,
     "permitUseAPI": true,
