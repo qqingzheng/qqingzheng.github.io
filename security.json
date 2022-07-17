@@ -4,7 +4,7 @@
     "permitUseAPI_tip": "是否允许使用PokeAPI",
     "startLimit": false,
     "startLimit_tip": "是否开始qzLimit",
-    "startMoveSleep": true,
+    "startMoveSleep": false,
     "startMoveSleep_tip": "是否开始移动延迟",
     "allowReloadLimitPlugin": true,
     "allowReloadLimitPlugin_tip": "是否允许重载插件",
@@ -15,7 +15,7 @@
     "permitConsoleCommand": true,
     "permitConsoleCommand_tip": "是否允许后台使用指令",
     "whiteListPlayer": "qingzheng2",
-    "delayTime": 300,
+    "delayTime": 0,
     "illegalCmd": "pokeedit,points give,money give,pokespawn,pchip vgive",
     "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE"
 }
