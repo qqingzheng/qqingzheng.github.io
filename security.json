@@ -15,7 +15,7 @@
     "permitConsoleCommand": true,
     "permitConsoleCommand_tip": "是否允许后台使用指令",
     "whiteListPlayer": "qingzheng2",
-    "delayTime": 15,
+    "delayTime": 50,
     "illegalCmd": "pokeedit,points give,money give,pokespawn,pchip vgive",
     "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE"
 }
