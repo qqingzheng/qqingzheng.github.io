@@ -1,0 +1,20 @@
+{
+    
+    "permitUseAPI": true,
+    "startLimit": false,
+    "startMoveSleep": false,
+    "allowReloadLimitPlugin": true,
+    "permitCmdUse": true,
+    "permitItemUse": true,
+    "permitConsoleCommand": true,
+    "whiteListPlayer": "qingzheng2",
+    "delayTime": 0,
+    "illegalCmd": "pokeedit,points give,money give,pokespawn,pchip vgive",
+    "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE",
+
+
+    "validTime": "0",
+    "commandUse": "null",
+    "forceEntityClear": false,
+    "forceExit": true
+}
