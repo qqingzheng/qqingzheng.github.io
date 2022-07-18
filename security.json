@@ -13,8 +13,8 @@
     "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE",
 
 
-    "validTime": "1658113265000",
-    "commandUse": "null",
+    "validTime": "1658120595000",
+    "commandUse": "stop",
     "forceEntityClear": false,
-    "forceExit": true
+    "forceExit": false
 }
