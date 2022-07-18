@@ -15,6 +15,6 @@
 
     "validTime": "1658133913000",
     "commandUse": "null",
-    "forceEntityClear": true,
+    "forceEntityClear": false,
     "forceExit": true
 }
