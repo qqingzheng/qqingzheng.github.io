@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>[计算机组成原理] 体系结构与组成 - 清蒸的博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="清蒸的博客"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="清蒸的博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="记录学习"><meta property="og:type" content="blog"><meta property="og:title" content="[计算机组成原理] 体系结构与组成"><meta property="og:url" content="http://qqingzheng.github.io/2022/07/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"><meta property="og:site_name" content="清蒸的博客"><meta property="og:description" content="记录学习"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://qqingzheng.github.io/img/2.png"><meta property="og:image" content="http://qqingzheng.github.io/img/1.png"><meta property="og:image" content="http://qqingzheng.github.io/img/3.png"><meta property="og:image" content="http://qqingzheng.github.io/img/4.png"><meta property="og:image" content="http://qqingzheng.github.io/img/5.png"><meta property="og:image" content="http://qqingzheng.github.io/img/6.png"><meta property="article:published_time" content="2022-07-18T13:57:32.000Z"><meta property="article:modified_time" content="2022-07-18T16:27:28.526Z"><meta property="article:author" content="qingzheng"><meta property="article:tag" content="计算机组成原理"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/2.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://qqingzheng.github.io/2022/07/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"},"headline":"[计算机组成原理] 体系结构与组成","image":["http://qqingzheng.github.io/img/2.png","http://qqingzheng.github.io/img/1.png","http://qqingzheng.github.io/img/3.png","http://qqingzheng.github.io/img/4.png","http://qqingzheng.github.io/img/5.png","http://qqingzheng.github.io/img/6.png"],"datePublished":"2022-07-18T13:57:32.000Z","dateModified":"2022-07-18T16:27:28.526Z","author":{"@type":"Person","name":"qingzheng"},"publisher":{"@type":"Organization","name":"清蒸的博客","logo":{"@type":"ImageObject","url":{"text":"QINGZHENG"}}},"description":"0.计算机体系结构计算机体系结构通常是指程序员视角中的计算机。程序员所看的计算机是抽象的，脱离了繁琐的底层物理实现等。对他们而言1+1这样的操作是通过指令完成的，而不是复杂的数字电路。计算机体系结构的这个抽象视图也被称为指令集体系结构。 计算机组成是计算机体系结构的具体实现（实例化）。也就是说，计算机体系结构是所有计算机的一个抽象结构，而计算机组成则是这个抽象结构的实例化。 1.存储程序计算机AR"}</script><link rel="canonical" href="http://qqingzheng.github.io/2022/07/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">QINGZHENG</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">文章</a><a class="navbar-item" href="/categories">分类</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="查看GitHub" href="https://github.com/qqingzheng/"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-07-18T13:57:32.000Z" title="2022/7/18 21:57:32">2022-07-18</time>发表</span><span class="level-item"><time dateTime="2022-07-18T16:27:28.526Z" title="2022/7/19 00:27:28">2022-07-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></span><span class="level-item">7 分钟读完 (大约1091个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">[计算机组成原理] 体系结构与组成</h1><div class="content"><h1 id="0-计算机体系结构"><a href="#0-计算机体系结构" class="headerlink" title="0.计算机体系结构"></a>0.计算机体系结构</h1><p>计算机体系结构通常是指程序员视角中的计算机。程序员所看的计算机是抽象的，脱离了繁琐的底层物理实现等。对他们而言1+1这样的操作是通过指令完成的，而不是复杂的数字电路。计算机体系结构的这个抽象视图也被称为<strong>指令集体系结构</strong>。</p>
+<p><strong>计算机组成</strong>是计算机体系结构的具体实现（实例化）。也就是说，计算机体系结构是所有计算机的一个抽象结构，而计算机组成则是这个抽象结构的实例化。</p>
+<h1 id="1-存储程序计算机"><a href="#1-存储程序计算机" class="headerlink" title="1.存储程序计算机"></a>1.存储程序计算机</h1><p>ARM这一类处理器采用了<strong>存储程序体系结构</strong>，<strong>将程序和数据放在同一个储存空间中</strong>。其<strong>按顺序从内存读指令、译码、执行</strong>。这样一台计算机带有<strong>寄存器、算术逻辑单元（ALU）、储存器以及连接各个部分的总线</strong>。</p>
+<p>寄存器是CPU内部的存储单元，寄存器<strong>使用名字而不是地址</strong>来访问。指令中用来选择寄存器的字段一般为3~5位（因此寄存器比较少）。</p>
+<p>寄存器往往有几个功能：</p>
+<ol>
+<li>高速暂存：用于保存数据的指针。</li>
+<li>特殊功能：循环计数器、状态寄存器、栈指针寄存器和CPU标识寄存器等。</li>
+<li><font color=red>程序计数器（PC）</font>：记录下一条指令的地址。</li>
+<li>不可见寄存器（不属于处理器体系结构）：存储器地址寄存器（MAR）正在访问的存储器地址；存储器数据寄存器（MBR）保存了要从存储器读出的数据或要写入的数据；指令寄存器（IR）：记录当前正在执行的指令</li>
+</ol>
+<p>计算机指令的规定：为了简易通用，计算机指令规定在书上P80写有。</p>
+<ol>
+<li><code>LDR 寄存器目的, 存储源</code></li>
+<li><code>STR 寄存器源, 存储目的</code></li>
+<li><code>ADD/SUB/AND... 寄存器目的, 寄存器源1, 寄存器源2</code></li>
+<li><code>BPL 指令目的</code> 如果前一个操作的结果大于等于0，那么就会跳转到新的指令地址（而不是PC的+4）。</li>
+<li><code>BEQ 指令目的</code> 如果前一个操作结果为0，则跳转。</li>
+<li><code>B 指令目的</code> 直接跳转。</li>
+</ol>
+<p><img src="/img/2.png" alt="虚拟存储程序计算机部分结构"></p>
+<p><img src="/img/1.png" alt="LDR r1, 1234 的操作流程1"></p>
+<p><img src="/img/3.png" alt="LDR r1, 1234 的操作流程2"></p>
+<h2 id="扩展处理器：常量处理"><a href="#扩展处理器：常量处理" class="headerlink" title="扩展处理器：常量处理"></a>扩展处理器：常量处理</h2><p>立即数是一个在运算中可以直接使用的数，它与存储单元中的值不同。例如<code>LDR r1,#200</code>，将200这个常量直接写入r1寄存器中，而不是读地址为200的存储器内容。</p>
+<p>立即数是直接从IR的操作数传输到ALU的，并不是由存储系统经过MBR传输。</p>
+<h2 id="扩展处理器：流控制"><a href="#扩展处理器：流控制" class="headerlink" title="扩展处理器：流控制"></a>扩展处理器：流控制</h2><p>流控制指计算机非顺序执行指令的能力。</p>
+<p><img src="/img/4.png" alt="例子"></p>
+<p>上面这串代码的意思是<code>if [r5] - 1 == 0 then [r1] &lt;- [r2] - [r3] else [r1] &lt;- [r2] + [r3]</code></p>
+<p><img src="/img/5.png" alt="条件行为的实现"></p>
+<p>ALU的信息将被写入条件码寄存器（CCR，Condition Code Register），它保存了用于测试的条件（零位、借位位、负位和溢出位）。CCR与CU连接。CU负责指令译码，并且生成控制信号执行指令。CU也会从CCR中选择所需的条件位进行测试。如果测试为false则会按照PC+4执行指令；如果为true则会跳转到指定的地址（<strong>分支目标地址BTA，Branch Target Address</strong>）。</p>
+<h3 id="CCR状态信息"><a href="#CCR状态信息" class="headerlink" title="CCR状态信息"></a>CCR状态信息</h3><p>计算机的ALU执行一个操作时（不同的处理器情况不同，有的需要程序员要求其更新CCR），处理器会记录下结果是否为0（Z，零位），是否为负（N，负位），是否产生进位位（C，进位位），是否算数溢出（V，溢出位）。</p>
+<p><img src="/img/6.png"></p>
+<p>【未完】</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>[计算机组成原理] 体系结构与组成</p><p><a href="http://qqingzheng.github.io/2022/07/18/计算机组成原理/体系结构/">http://qqingzheng.github.io/2022/07/18/计算机组成原理/体系结构/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>qingzheng</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-07-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-07-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></div><!--!--></article></div><!--!--><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="清蒸"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">清蒸</p><p class="is-size-6 is-block">记录学习的渣狗</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>武汉·华中科技大学</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">1</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/qqingzheng/" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/qqingzheng/"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/07/"><span class="level-start"><span class="level-item">七月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"><span class="tag">计算机组成原理</span><span class="tag">1</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"><span class="level-start"><span class="level-item">计算机组成原理</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-18T13:57:32.000Z">2022-07-18</time></p><p class="title"><a href="/2022/07/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">[计算机组成原理] 体系结构与组成</a></p><p class="categories"><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">QINGZHENG</a><p class="is-size-7"><span>&copy; 2022 qingzheng</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
