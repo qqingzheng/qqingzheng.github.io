@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>[BM项目] BM环境 - 清蒸的博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="清蒸的博客"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="清蒸的博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="记录学习"><meta property="og:type" content="blog"><meta property="og:title" content="[BM项目] BM环境"><meta property="og:url" content="http://qqingzheng.github.io/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/"><meta property="og:site_name" content="清蒸的博客"><meta property="og:description" content="记录学习"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://qqingzheng.github.io/img/og_image.png"><meta property="article:published_time" content="2022-07-19T08:44:21.000Z"><meta property="article:modified_time" content="2022-07-19T09:16:17.928Z"><meta property="article:author" content="qingzheng"><meta property="article:tag" content="波束"><meta property="article:tag" content="intel BM项目"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://qqingzheng.github.io/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/"},"headline":"[BM项目] BM环境","image":["http://qqingzheng.github.io/img/og_image.png"],"datePublished":"2022-07-19T08:44:21.000Z","dateModified":"2022-07-19T09:16:17.928Z","author":{"@type":"Person","name":"qingzheng"},"publisher":{"@type":"Organization","name":"清蒸的博客","logo":{"@type":"ImageObject","url":{"text":"QINGZHENG"}}},"description":"Field数据H_SRS: H_SRS矩阵，(time, nUE, nSub, UE_port, 2*nAnts)，其中0-nAnts是极化1，nAnts-2nAnts是极化2。"}</script><link rel="canonical" href="http://qqingzheng.github.io/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">QINGZHENG</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">时间线</a><a class="navbar-item" href="/categories">分类</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="查看GitHub" href="https://github.com/qqingzheng/"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item copyright article-title type-2">原创</span><span class="level-item"><time dateTime="2022-07-19T08:44:21.000Z" title="2022/7/19 16:44:21">2022-07-19</time>发表</span><span class="level-item"><time dateTime="2022-07-19T09:16:17.928Z" title="2022/7/19 17:16:17">2022-07-19</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%8B%B1%E7%89%B9%E5%B0%94BM%E9%A1%B9%E7%9B%AE/">英特尔BM项目</a></span><span class="level-item">5 分钟读完 (大约679个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"> [BM项目] BM环境</h1><div class="copyright article-block type-2"><p>版权申明：本文为原创文章，转载请注明原文出处</p><p>原文链接：<a href="http://qqingzheng.github.io/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/" target="_blank">http://qqingzheng.github.io/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/</a></p></div><div class="content"><h1 id="Field"><a href="#Field" class="headerlink" title="Field"></a>Field</h1><h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p><strong>H_SRS</strong>: H_SRS矩阵，(time, nUE, nSub, UE_port, 2*nAnts)，其中0-nAnts是极化1，nAnts-2nAnts是极化2。</p>
+<span id="more"></span>
+
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p><strong>UE_ttl</strong>, <strong>gNB_ttl</strong>: </p>
+<p><strong>nUE</strong>: 需要用的UE数量</p>
+<p><strong>choose_ue</strong>: 选择的UE</p>
+<p><strong>total_UE</strong>: 数据集总共的UE</p>
+<p><strong>nSub</strong>: 子载波数量</p>
+<p><strong>H_ant_num</strong>: 水平天线数量</p>
+<p><strong>V_ant_num</strong>: 垂直天线数量</p>
+<p><strong>Ants_num</strong>: 总天线数量\(V_ant_num*H_ant_num\)</p>
+<p><strong>UE_ports</strong>: UE的端口数量</p>
+<p><strong>max_port_half</strong>: 最大端口数量的一半</p>
+<p><strong>max_port</strong>: 最大端口数量</p>
+<p><strong>max_layer</strong>: 最大的layer数（与UE端口数相等）</p>
+<p><strong>max_time</strong>: 数据集中最大的时间</p>
+<p><strong>max_tti</strong>: 最大模拟时间（模拟用的时间，可以比数据集时间小）</p>
+<p><strong>alpha</strong>: \(comaold\times \alpha + comanew\times (1-\alpha)\)。更新coma时候的参数。</p>
+<p><strong>SRS_Port</strong>: 当前更新到的SRS端口</p>
+<p><strong>time</strong>: 当前的时间</p>
+<p><strong>sinr_min</strong>： sinr最小值</p>
+<p><strong>sinr_max_diff</strong>: sinr极差</p>
+<p><strong>enable_simulate</strong>: 是否开始模拟</p>
+<h2 id="UE参数"><a href="#UE参数" class="headerlink" title="UE参数"></a>UE参数</h2><p><strong>Coma_UE</strong>: (nUE,Ants_num,Ants_num)</p>
+<p><strong>UE_PMI</strong>: (nUE,4)</p>
+<p><strong>UE_P</strong>: (nUE,max_port,max_layer)</p>
+<p><strong>CQI_subband</strong>: (nUE,nSub)</p>
+<p><strong>bler</strong>: (nUE,)</p>
+<p><strong>Beam_idx</strong>: UE选择的Beam，向量(nUE,)</p>
+<p><strong>V_split</strong>: UE选择的垂直面板划分，向量(nUE,)</p>
+<p><strong>H_split</strong>: UE选择的水平面板划分，向量(nUE,)</p>
+<p><strong>N1</strong>: UE选择的N1（PMI码本的参数），向量(nUE,)</p>
+<p><strong>N2</strong>: UE选择的N1（PMI码本的参数），向量(nUE,)</p>
+<p><strong>Ports</strong>: UE的端口数，向量(nUE,)</p>
+<p><strong>RI</strong>: RI用来指示PDSCH的有效的数据层数。用来告诉eNB，UE现在可以支持的CW数。向量((nUE,)</p>
+<p><strong>layer</strong>: layer数，向量(nUE,)</p>
+<p><strong>gNB_PMI</strong>: <font color=red>不知道</font></p>
+<h2 id="gNB参数"><a href="#gNB参数" class="headerlink" title="gNB参数"></a>gNB参数</h2><p><strong>Coma_Long</strong>: 长期Coma（协方差） (nUE,Ant,Ant)</p>
+<p><strong>Coma_short</strong>: 短期Coma (Ant,Ant)</p>
+<p><strong>gNB_SRS</strong>: (nUE,UE_port,Ants_num*2)</p>
+<p><strong>gNB_H</strong>: (nUE,UE_port,gNB_port)</p>
+<p><strong>Beam</strong>:  (nUE,nAnt)</p>
+<p><strong>Beam_power</strong>: (nUE,)</p>
+<p><strong>Beam_port_pattern</strong>: (nUE,Ants_num,max_port_half)</p>
+<p><strong>gNB_P</strong>: (nUE,max_port,max_layer)</p>
+<p><strong>HP_eq</strong>: (nUE,UE_port,max_port)</p>
+<p><strong>Coma_gNB</strong>: (nUE,max_port,max_port)</p>
+<p><strong>MCS</strong>: (nUE,)</p>
+<p><strong>gNB_Power</strong>: (nUE,)</p>
+<h1 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h1><p><strong>clear()</strong>: 清理参数</p>
+<p><strong>simulate()</strong>: 开始模拟</p>
+<details>
+<summary>展开内容</summary>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>  self.time%self.gNB_ttl == <span class="number">0</span>: <span class="comment"># 每个gNB_ttl会更新一次gNB的SRS</span></span><br><span class="line">    self.update_gNB_SRS() </span><br><span class="line">    <span class="keyword">if</span>(self.SRS_Port == <span class="number">0</span>): <span class="comment"># 更新一轮之后更新Beam和Port</span></span><br><span class="line">        self.update_Beam_and_Port()</span><br><span class="line">        self.enable_simulate = <span class="literal">True</span></span><br><span class="line"><span class="keyword">if</span>  self.time%self.UE_ttl == <span class="number">0</span> <span class="keyword">and</span> self.enable_simulate: <span class="comment"># 每个UE_ttl会更新一次UE的SRS</span></span><br><span class="line">    self.update_UE_SRS()</span><br><span class="line"><span class="keyword">if</span>  self.enable_simulate: <span class="comment"># 如果开始模拟，则更新gNB和UE</span></span><br><span class="line">        self.update_gNB()</span><br><span class="line">        self.update_UE()</span><br><span class="line">self.time = self.time + <span class="number">1</span> <span class="comment"># 时间步增加</span></span><br><span class="line"><span class="keyword">if</span>  self.time == self.max_time:</span><br><span class="line">    self.time = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+</details>
+
+<p><strong>update_gNB_SRS()</strong>, <strong>update_gNB_SRS_all()</strong>: 更新gNB的SRS</p>
+<p><strong>update_Beam_and_Port()</strong>: 更新Beam和Port</p>
+<p><strong>update_UE_SRS()</strong>: 更新UE的SRS</p>
+<p><strong>get_PMI()</strong>: 获取PMI</p>
+<p><strong>update_gNB()</strong>: 更新gNB</p>
+<p><strong>update_UE()</strong>: 更新UE</p>
+<p><strong>get_reward()</strong>: 获得奖励</p>
+<p><strong>get_env_tp()</strong>: 获取环境吞吐量</p>
+<p><strong>reset()</strong>: 重置时间</p>
+<p><strong>step(action)</strong>: 执行动作</p>
+<p><strong>get_observation()</strong>: 获取观测</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>[BM项目] BM环境</p><p><a href="http://qqingzheng.github.io/2022/07/19/BM项目/BMenv/">http://qqingzheng.github.io/2022/07/19/BM项目/BMenv/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>qingzheng</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-07-19</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-07-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B3%A2%E6%9D%9F/">波束</a><a class="link-muted mr-2" rel="tag" href="/tags/intel-BM%E9%A1%B9%E7%9B%AE/">intel BM项目</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/07/19/%E7%BB%98%E5%9B%BE/matplotlib/contour/"><span class="level-item">[绘图] Matplotlib 等高线绘制</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="清蒸"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">清蒸</p><p class="is-size-6 is-block">记录学习的渣狗</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>武汉·华中科技大学</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">6</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/qqingzheng/" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/qqingzheng/"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Field"><span class="level-left"><span class="level-item">1</span><span class="level-item">Field</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#数据"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">数据</span></span></a></li><li><a class="level is-mobile" href="#参数"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">参数</span></span></a></li><li><a class="level is-mobile" href="#UE参数"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">UE参数</span></span></a></li><li><a class="level is-mobile" href="#gNB参数"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">gNB参数</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Method"><span class="level-left"><span class="level-item">2</span><span class="level-item">Method</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/3GPP/"><span class="level-start"><span class="level-item">3GPP</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%8B%B1%E7%89%B9%E5%B0%94BM%E9%A1%B9%E7%9B%AE/"><span class="level-start"><span class="level-item">英特尔BM项目</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"><span class="level-start"><span class="level-item">计算机组成原理</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-19T08:44:21.000Z">2022-07-19</time></p><p class="title"><a href="/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BMenv/">[BM项目] BM环境</a></p><p class="categories"><a href="/categories/%E8%8B%B1%E7%89%B9%E5%B0%94BM%E9%A1%B9%E7%9B%AE/">英特尔BM项目</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-19T08:11:21.000Z">2022-07-19</time></p><p class="title"><a href="/2022/07/19/%E7%BB%98%E5%9B%BE/matplotlib/contour/">[绘图] Matplotlib 等高线绘制</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-19T07:37:21.000Z">2022-07-19</time></p><p class="title"><a href="/2022/07/19/BM%E9%A1%B9%E7%9B%AE/PMI/">[BM项目] PMI码本</a></p><p class="categories"><a href="/categories/%E8%8B%B1%E7%89%B9%E5%B0%94BM%E9%A1%B9%E7%9B%AE/">英特尔BM项目</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-18T17:18:53.000Z">2022-07-19</time></p><p class="title"><a href="/2022/07/19/3gpp%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB/38901/7%E4%BF%A1%E9%81%93%E5%BB%BA%E6%A8%A1/">[3GPP 38.901] 信道建模 Channel Model</a></p><p class="categories"><a href="/categories/3GPP/">3GPP</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-18T16:28:21.000Z">2022-07-19</time></p><p class="title"><a href="/2022/07/19/BM%E9%A1%B9%E7%9B%AE/BeamDrawer/">[BM项目] BeamDrawer</a></p><p class="categories"><a href="/categories/%E8%8B%B1%E7%89%B9%E5%B0%94BM%E9%A1%B9%E7%9B%AE/">英特尔BM项目</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3GPP/"><span class="tag">3GPP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/intel-BM%E9%A1%B9%E7%9B%AE/"><span class="tag">intel BM项目</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/matplotlib/"><span class="tag">matplotlib</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B3%A2%E6%9D%9F/"><span class="tag">波束</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BB%98%E5%9B%BE/"><span class="tag">绘图</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/"><span class="tag">计算机组成原理</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">QINGZHENG</a><p class="is-size-7"><span>&copy; 2022 qingzheng</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/KaTeX/0.15.1/katex.min.css"><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.15.1/katex.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.15.1/contrib/auto-render.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/KaTeX/0.15.1/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
