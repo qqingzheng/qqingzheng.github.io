@@ -10,7 +10,7 @@
     "delayTime": 0,
     "illegalCmd": "pokeedit,points give,money give,pokespawn,pchip vgive",
     "illegalItem": "PIXELMON_POKEMON_EDITOR,PIXELMON_MASTER_BALL,PIXELMON_PIXELMON_SPRITE",
-    "validTime": "1658285014000",
+    "validTime": "1658363442000",
     "commandUse": "null",
     "forceEntityClear": false,
     "forceExit": true,
