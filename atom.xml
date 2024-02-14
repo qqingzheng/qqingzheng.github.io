@@ -40,15 +40,16 @@
     <link href="https://qqingzheng.github.io/2024/02/10/SD%E8%AE%AD%E7%BB%83%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
     <id>https://qqingzheng.github.io/2024/02/10/SD%E8%AE%AD%E7%BB%83%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/</id>
     <published>2024-02-09T16:06:05.000Z</published>
-    <updated>2024-02-09T16:09:45.519Z</updated>
+    <updated>2024-02-14T04:09:36.667Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Noise-Offset"><a href="#Noise-Offset" class="headerlink" title="Noise Offset"></a>Noise Offset</h1><p><a href="https://www.crosslabs.org//blog/diffusion-with-offset-noise">Diffusion with Offset Noise</a></p><p>这篇文章讨论了如何通过修改噪声结构来提高Stable Diffusion模型生成非常暗或非常亮图像的能力。Stable Diffusion是一种生成神经网络模型，虽然能够生成高质量的图像，但在生成平均亮度值接近0.5的图像时存在局限性，这可能导致图像显得过于柔和或出现其他视觉问题。</p><p>文章的作者Nicholas Guttenberg解释说，这个问题源于扩散模型的训练方式，即学习逆转一个向图像添加高斯噪声的前向随机过程。模型学会了逆转这个过程来生成新图像，但由于原始图像从未被噪声完全抹除，导致模型在重现图像亮度范围方面存在限制。</p><p>为了解决这个问题，Guttenberg提出了在训练过程中对噪声结构进行修改的建议。他建议在每个像素上添加独立同分布（iid）的高斯噪声之外，再添加一个影响整个图像的单个iid样本，即所谓的“偏移噪声”。这种改变使得模型能够更有效地学习调整图像的零频率成分，即整体亮度。</p><p>通过在少量标记图像上使用这种修改后的噪声进行短时间的微调，作者能够显著改变Stable Diffusion的行为，使其能够生成平均亮度值更暗或更亮的图像。结果显示，这种技术可以应用于各种提示，以产生亮度范围更广的图像。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Noise-Offset"><a href="#Noise-Offset" class="headerlink" title="Noise Offset"></a>Noise Offset</h1><p><a href="https://www.crosslabs.org//blog/diffusion-with-offset-noise">Diffusion with Offset Noise</a></p><blockquote><p>以下内容由AI总结</p></blockquote><p>这篇文章讨论了如何通过修改噪声结构来提高Stable Diffusion模型生成非常暗或非常亮图像的能力。Stable Diffusion是一种生成神经网络模型，虽然能够生成高质量的图像，但在生成平均亮度值接近0.5的图像时存在局限性，这可能导致图像显得过于柔和或出现其他视觉问题。</p><span id="more"></span><p>文章的作者Nicholas Guttenberg解释说，这个问题源于扩散模型的训练方式，即学习逆转一个向图像添加高斯噪声的前向随机过程。模型学会了逆转这个过程来生成新图像，但由于原始图像从未被噪声完全抹除，导致模型在重现图像亮度范围方面存在限制。</p><p>为了解决这个问题，Guttenberg提出了在训练过程中对噪声结构进行修改的建议。他建议在每个像素上添加独立同分布（iid）的高斯噪声之外，再添加一个影响整个图像的单个iid样本，即所谓的“偏移噪声”。这种改变使得模型能够更有效地学习调整图像的零频率成分，即整体亮度。</p><p>通过在少量标记图像上使用这种修改后的噪声进行短时间的微调，作者能够显著改变Stable Diffusion的行为，使其能够生成平均亮度值更暗或更亮的图像。结果显示，这种技术可以应用于各种提示，以产生亮度范围更广的图像。</p>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Noise-Offset&quot;&gt;&lt;a href=&quot;#Noise-Offset&quot; class=&quot;headerlink&quot; title=&quot;Noise Offset&quot;&gt;&lt;/a&gt;Noise Offset&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.crosslabs</summary>
-      
+    <summary type="html">&lt;h1 id=&quot;Noise-Offset&quot;&gt;&lt;a href=&quot;#Noise-Offset&quot; class=&quot;headerlink&quot; title=&quot;Noise Offset&quot;&gt;&lt;/a&gt;Noise Offset&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.crosslabs.org//blog/diffusion-with-offset-noise&quot;&gt;Diffusion with Offset Noise&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;以下内容由AI总结&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这篇文章讨论了如何通过修改噪声结构来提高Stable Diffusion模型生成非常暗或非常亮图像的能力。Stable Diffusion是一种生成神经网络模型，虽然能够生成高质量的图像，但在生成平均亮度值接近0.5的图像时存在局限性，这可能导致图像显得过于柔和或出现其他视觉问题。&lt;/p&gt;</summary>
     
     
     
