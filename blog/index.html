@@ -163,11 +163,11 @@ mjx-container[display="true"] + br {
     <!-- <div class="logo"><a href="/" title="Len"><img src="/img/logo.svg" alt="Len" aria-label="logo" height="20"></a></div> -->
     <ul class="nav">
         
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">首页</a></li>
         
-        <li><a href="/about">About</a></li>
+        <li><a href="/about">Github</a></li>
         
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">分类</a></li>
         
     </ul>
 </div>
@@ -176,7 +176,30 @@ mjx-container[display="true"] + br {
                 <div class="post-list">
     
     <div class="post">
-        <a class="post-title" href="2024/06/05/1/">《生成扩散模型漫谈（一）：DDPM = 拆楼 + 建楼》阅读笔记</a>
+        <a class="post-title" href="2024/06/13/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/RectifiedFlow%E6%A8%A1%E5%9E%8B/">RectifiedFlow模型学习</a>
+        <div class="post-except">
+            
+            <a class="read-more" href="2024/06/13/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/RectifiedFlow%E6%A8%A1%E5%9E%8B/"> ... </a>
+        </div>
+        <div class="post-date">2024.06.13</div>
+    </div>
+    
+    <div class="post">
+        <a class="post-title" href="2024/06/08/Open-Sora-Plan/Diffusion%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/">【Open-Sora Plan项目】DiT代码解析</a>
+        <div class="post-except">
+            
+笔者过去都在负责项目的VAE部分的开发和训练，最近开始负责Diffusion部分的开发和训练，本文主要介绍Diffusion部分的代码解析。正因如此，可能表述会有不当，还请谅解。
+
+
+
+训练代码架构除去了环境配置和训练的套路性代码，训练代码大致可以简化如下：
+            <a class="read-more" href="2024/06/08/Open-Sora-Plan/Diffusion%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/"> ... </a>
+        </div>
+        <div class="post-date">2024.06.08</div>
+    </div>
+    
+    <div class="post">
+        <a class="post-title" href="2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/1/">《生成扩散模型漫谈（一）：DDPM = 拆楼 + 建楼》阅读笔记</a>
         <div class="post-except">
             
 
@@ -197,7 +220,21 @@ mjx-container[display="true"] + br {
 因此可以通过一步正态分布采样得到：
 
 问题2：如何构造损失
-            <a class="read-more" href="2024/06/05/1/"> ... </a>
+            <a class="read-more" href="2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/1/"> ... </a>
+        </div>
+        <div class="post-date">2024.06.05</div>
+    </div>
+    
+    <div class="post">
+        <a class="post-title" href="2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/2/">《生成扩散模型漫谈（二）：DDPM = 自回归式VAE》阅读笔记</a>
+        <div class="post-except">
+            问题1：怎么建模生成的过程？
+解释：
+前向过程：
+反向过程：
+这个可以理解为，前向过程为数据到噪声的路径分布可以利用马尔可夫的性质，拆解为一系列（一步一步的）的条件概率分布。其中代表数据分布，代表先验分布（噪声分布）。
+然后，模型认为每个条件分布都是正态分布，
+            <a class="read-more" href="2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/2/"> ... </a>
         </div>
         <div class="post-date">2024.06.05</div>
     </div>

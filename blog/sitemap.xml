@@ -2,7 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://qqingzheng.github.io/2024/06/05/1/</loc>
+    <loc>https://qqingzheng.github.io/2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/2/</loc>
+    
+    <lastmod>2024-06-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://qqingzheng.github.io/2024/06/13/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/RectifiedFlow%E6%A8%A1%E5%9E%8B/</loc>
+    
+    <lastmod>2024-06-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://qqingzheng.github.io/2024/06/08/Open-Sora-Plan/Diffusion%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2024-06-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://qqingzheng.github.io/2024/06/05/%E8%8B%8F%E7%A5%9E%E7%94%9F%E6%88%90%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E6%BC%AB%E8%B0%88%E9%98%85%E8%AF%BB/1/</loc>
     
     <lastmod>2024-06-08</lastmod>
     
@@ -13,7 +40,7 @@
 
   <url>
     <loc>https://qqingzheng.github.io/</loc>
-    <lastmod>2024-06-08</lastmod>
+    <lastmod>2024-06-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
