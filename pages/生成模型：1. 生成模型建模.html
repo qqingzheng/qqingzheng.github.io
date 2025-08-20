@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>生成模型：1. 生成模型建模</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">生成模型：1. 生成模型建模</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月18日21时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">基于似然的生成模型</h1>
+<blockquote>
+<p>基于似然的生成模型包括：VAE、自回归模型、流模型等，不包括GAN。</p>
+</blockquote>
+<p>到底什么是生成模型？以图片为例子，如果我们知道所有真实图片的分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>，那我们从这个分布中采样一个样本，就可以得到真实的图片，这就是“生成”。</p>
+<p>因此，生成模型的目标就是学习到这个分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>，这个也称为“证据”。因此目标函数也就是：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max \sum_{x\in D} \log p(x)
+$$</span><script type="math/tex; mode=display">
+max \sum_{x\in D} \log p(x)
+</script>
+</div>
+</p>
+<p>其中<span class="MathJaxBox"><span class="MathJax_Preview">$D$</span><script type="math/tex">D</script></span>代表训练数据集。</p>
+<h2 id="_2">变分自编码器</h2>
+<h3 id="elbo">基于ELBO（证据下界）的推导</h3>
+<p>由于证据<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>计算是不可能的，我们将<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>改写成：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p(x) = \int p(x|z) p(z) dz
+$$</span><script type="math/tex; mode=display">
+p(x) = \int p(x|z) p(z) dz
+</script>
+</div>
+</p>
+<p>我们分析一下上式是否可以计算：这里涉及两个分布，一个是（解码器）似然分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(x|z)$</span><script type="math/tex">p(x|z)</script></span>，一个是先验分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(z)$</span><script type="math/tex">p(z)</script></span>。假如我们要最大化目标：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\sum_{x\in D} \log p(x) = \sum_{x\in D} log \int p(x|z) p(z) dz
+$$</span><script type="math/tex; mode=display">
+\sum_{x\in D} \log p(x) = \sum_{x\in D} log \int p(x|z) p(z) dz
+</script>
+</div>
+</p>
+<p>需要我们对所有训练集数据<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>，并且对所有的<span class="MathJaxBox"><span class="MathJax_Preview">$z$</span><script type="math/tex">z</script></span>积分，这是不可能的。因此我们要想办法能不能变成可采样的形式，用蒙特卡洛估计去优化。我们接着改写<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>:</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+log p(x) = log \int p(x|z) p(z) dz = log \int p(x|z) p(z) \frac{q(z|x)}{q(z|x)} dz \\
+= \underbrace{log \mathbb{E}_{z\sim q(z|x)} [\frac{p(x|z) p(z)}{q(z|x)}] 
+\geq \mathbb{E}_{z\sim q(z|x)}[logp(x|z) + logp(z) - logq(z|x)]}_{\text{ Jensen 不等式}} \\
+= \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - \mathbb{E}_{z\sim q(z|x)}[log\frac{q(z|x)}{p(z)}] \\
+= \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z)) = ELBO
+$$</span><script type="math/tex; mode=display">
+log p(x) = log \int p(x|z) p(z) dz = log \int p(x|z) p(z) \frac{q(z|x)}{q(z|x)} dz \\
+= \underbrace{log \mathbb{E}_{z\sim q(z|x)} [\frac{p(x|z) p(z)}{q(z|x)}] 
+\geq \mathbb{E}_{z\sim q(z|x)}[logp(x|z) + logp(z) - logq(z|x)]}_{\text{ Jensen 不等式}} \\
+= \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - \mathbb{E}_{z\sim q(z|x)}[log\frac{q(z|x)}{p(z)}] \\
+= \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z)) = ELBO
+</script>
+</div>
+</p>
+<blockquote>
+<p>Jensen 不等式见<a href="不等式：2.%20Jensen不等式.html">这里</a></p>
+</blockquote>
+<p>这里我们用<span class="MathJaxBox"><span class="MathJax_Preview">$q(z|x)$</span><script type="math/tex">q(z|x)</script></span>去近似真实后验<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>（因为真实后验无法被计算）。所以最终的目标就是最大化<span class="MathJaxBox"><span class="MathJax_Preview">$ELBO$</span><script type="math/tex">ELBO</script></span>，即：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max_\theta \sum_{x\in D} \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z)) \\ \approx max_\theta \mathbb{E}_{x\sim p(x)}[\mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z))]
+$$</span><script type="math/tex; mode=display">
+max_\theta \sum_{x\in D} \mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z)) \\ \approx max_\theta \mathbb{E}_{x\sim p(x)}[\mathbb{E}_{z\sim q(z|x)}[logp(x|z)] - D_{KL}(q(z|x) || p(z))]
+</script>
+</div>
+</p>
+<blockquote>
+<p>变分的由来：变分法是在泛函中，寻找一个函数<span class="MathJaxBox"><span class="MathJax_Preview">$q(x)$</span><script type="math/tex">q(x)</script></span>，使得泛函<span class="MathJaxBox"><span class="MathJax_Preview">$L(q(x))$</span><script type="math/tex">L(q(x))</script></span>最大或者最小。泛函可以理解为函数的函数。那VAE其实在做的就是找一个最优的近似后验<span class="MathJaxBox"><span class="MathJax_Preview">$q(z|x)$</span><script type="math/tex">q(z|x)</script></span>，使得<span class="MathJaxBox"><span class="MathJax_Preview">$ELBO$</span><script type="math/tex">ELBO</script></span>最小。</p>
+</blockquote>
+<h3 id="_3">基于联合概率分布的推导</h3>
+<p>我们将<span class="MathJaxBox"><span class="MathJax_Preview">$p(z)$</span><script type="math/tex">p(z)</script></span>写成：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p(z) = \int p(z, x) dz \\
+$$</span><script type="math/tex; mode=display">
+p(z) = \int p(z, x) dz \\
+</script>
+</div>
+</p>
+<p>那么最小化<span class="MathJaxBox"><span class="MathJax_Preview">$KL(p(x)||p_\theta(x))$</span><script type="math/tex">KL(p(x)||p_\theta(x))</script></span>，其实可以通过最小化<span class="MathJaxBox"><span class="MathJax_Preview">$KL(p(z,x)||p_\theta(z,x))$</span><script type="math/tex">KL(p(z,x)||p_\theta(z,x))</script></span>来实现。因此优化目标转为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+min \quad KL(p(z, x) || p_\theta(z, x))
+$$</span><script type="math/tex; mode=display">
+min \quad KL(p(z, x) || p_\theta(z, x))
+</script>
+</div>
+</p>
+<p>我们改写一下：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+KL(p(z, x) || p_\theta(z, x)) = \int\int p(z, x) log \frac{p(z, x)}{p_\theta(z, x)} dz dx \\
+= \int\int p(x) p(z|x) log \frac{p(z, x)}{p_\theta(z, x)} dz dx \\
+= \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log \frac{p(z, x)}{p_\theta(z, x)}]] \\
+= \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log \frac{p(z|x)}{p(z)} - log p_\theta(x|z) + log p(x)]] \\
+= \mathbb{E}_{x\sim p(x)} [KL(p(z|x) || p(z)) ] - \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log p_\theta(x|z)]] + \underbrace{\mathbb{E}_{x\sim p(x)}[log p(x)]}_{\text{常数}} \\
+$$</span><script type="math/tex; mode=display">
+KL(p(z, x) || p_\theta(z, x)) = \int\int p(z, x) log \frac{p(z, x)}{p_\theta(z, x)} dz dx \\
+= \int\int p(x) p(z|x) log \frac{p(z, x)}{p_\theta(z, x)} dz dx \\
+= \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log \frac{p(z, x)}{p_\theta(z, x)}]] \\
+= \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log \frac{p(z|x)}{p(z)} - log p_\theta(x|z) + log p(x)]] \\
+= \mathbb{E}_{x\sim p(x)} [KL(p(z|x) || p(z)) ] - \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log p_\theta(x|z)]] + \underbrace{\mathbb{E}_{x\sim p(x)}[log p(x)]}_{\text{常数}} \\
+</script>
+</div>
+</p>
+<p>所以优化目标转为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+min_\theta\quad \mathbb{E}_{x\sim p(x)} [KL(p(z|x) || p(z)) ] - \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log p_\theta(x|z)]]
+$$</span><script type="math/tex; mode=display">
+min_\theta\quad \mathbb{E}_{x\sim p(x)} [KL(p(z|x) || p(z)) ] - \mathbb{E}_{x\sim p(x)} [\mathbb{E}_{z\sim p(z|x)} [log p_\theta(x|z)]]
+</script>
+</div>
+</p>
+<p>我们来分析一下这个目标函数：</p>
+<p>第一部分，我们从真实分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>中采样样本<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>，计算条件概率<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>的分布，与先验分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(z)$</span><script type="math/tex">p(z)</script></span>的分布进行比较，计算 KL 散度。</p>
+<p>第二部分，我们从真实分布<span class="MathJaxBox"><span class="MathJax_Preview">$p(x)$</span><script type="math/tex">p(x)</script></span>中采样样本<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>，计算条件概率<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>的分布，并且从<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>中采样<span class="MathJaxBox"><span class="MathJax_Preview">$z$</span><script type="math/tex">z</script></span>，通过<span class="MathJaxBox"><span class="MathJax_Preview">$p_\theta(x|z)$</span><script type="math/tex">p_\theta(x|z)</script></span>得到似然概率。</p>
+<p>根据目标，我们希望最小化后验分布和先验分布的 KL 散度，同时最大化似然概率。</p>
+<p>但是优化目标的计算仍然存在问题：<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>分布未知，无法直接计算。而VAE为了解决这个问题，假设<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>与<span class="MathJaxBox"><span class="MathJax_Preview">$p(z)$</span><script type="math/tex">p(z)</script></span>都是正态分布，并且使用可学习的分布<span class="MathJaxBox"><span class="MathJax_Preview">$q(z|x)=p_\Theta(z|x)$</span><script type="math/tex">q(z|x)=p_\Theta(z|x)</script></span>近似<span class="MathJaxBox"><span class="MathJax_Preview">$p(z|x)$</span><script type="math/tex">p(z|x)</script></span>。至此，优化目标可以数值求得。</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

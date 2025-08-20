@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>强化学习：如何理解价值、优势、奖励和回报</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">强化学习：如何理解价值、优势、奖励和回报</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月19日00时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <p>在强化学习（马尔可夫决策链，MDP）的框架下，Agent在环境中交互形成轨迹，每个轨迹点包括了状态、动作、奖励。我们有轨迹：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\tau = (s_0, a_0, r_0, s_1, a_1, r_1, \ldots, s_T, a_T, r_T)
+$$</span><script type="math/tex; mode=display">
+\tau = (s_0, a_0, r_0, s_1, a_1, r_1, \ldots, s_T, a_T, r_T)
+</script>
+</div>
+</p>
+<p>奖励可以理解为在某个时刻Agent采取某个状态某个动作后获得的即时奖励，是“瞬时”的奖励，不包含任何历史或者未来信息。</p>
+<h1 id="_1">回报</h1>
+<p>回报既有瞬时的奖励也涵盖了未来的奖励：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+G_t = \sum_{t'=t}^T \gamma^{t'-t} r_{t'}
+$$</span><script type="math/tex; mode=display">
+G_t = \sum_{t'=t}^T \gamma^{t'-t} r_{t'}
+</script>
+</div>
+</p>
+<p>其中，<span class="MathJaxBox"><span class="MathJax_Preview">$\gamma$</span><script type="math/tex">\gamma</script></span>是折扣因子，<span class="MathJaxBox"><span class="MathJax_Preview">$r_{t'}$</span><script type="math/tex">r_{t'}</script></span>是在时间<span class="MathJaxBox"><span class="MathJax_Preview">$t'$</span><script type="math/tex">t'</script></span>获得的奖励。</p>
+<blockquote>
+<p>至于为什么需要折扣因子，从数学角度来看，我们希望回报是收敛的，如果没有折扣因子会导致<span class="MathJaxBox"><span class="MathJax_Preview">$t$</span><script type="math/tex">t</script></span>无穷大的时候奖励无穷大（我们在<a href="强化学习：1.%20策略梯度算法.html">强化学习：1. 策略梯度算法</a>对这个问题进行了简单的讨论）；从经验角度来看，折扣因子可以使得Agent对于未来的奖励有一个衰减的权重，在当下收益和未来收益之间做平衡。</p>
+</blockquote>
+<p>在强化学习训练中，我们更希望Agent能够获得更高“回报”，而非瞬时的“奖励”。但是，回报虽好，也存在以下问题：</p>
+<ol>
+<li>回报不稳定，方差很大。回报是一个<strong>随机变量</strong>，他被环境噪声或状态转移概率等因素影响。</li>
+<li>回报依赖于未来的奖励，因此训练的时候需要采样整个轨迹。</li>
+</ol>
+<p>因此，在策略梯度方法发展后续，用优势函数（回报的期望，是固定值，与轨迹无关）来代替回报进行优化：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) G_t \\
+\rightarrow \nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) A_t(s,a)
+$$</span><script type="math/tex; mode=display">
+\nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) G_t \\
+\rightarrow \nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) A_t(s,a)
+</script>
+</div>
+</p>
+<p>对于这个公式的由来，可以参考<a href="强化学习：1.%20策略梯度算法.html">强化学习：1. 策略梯度算法</a>。</p>
+<h1 id="_2">价值函数</h1>
+<p>价值函数分为：状态价值函数<span class="MathJaxBox"><span class="MathJax_Preview">$V(s)$</span><script type="math/tex">V(s)</script></span>和动作-状态价值函数<span class="MathJaxBox"><span class="MathJax_Preview">$Q(s, a)$</span><script type="math/tex">Q(s, a)</script></span>。</p>
+<p>状态价值函数<span class="MathJaxBox"><span class="MathJax_Preview">$V(s)$</span><script type="math/tex">V(s)</script></span>表示在状态<span class="MathJaxBox"><span class="MathJax_Preview">$s$</span><script type="math/tex">s</script></span>下，Agent能够获得的回报的期望：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+V(s) = \mathbb{E}[G_t | s_t = s]
+$$</span><script type="math/tex; mode=display">
+V(s) = \mathbb{E}[G_t | s_t = s]
+</script>
+</div>
+</p>
+<p>动作-状态价值函数<span class="MathJaxBox"><span class="MathJax_Preview">$Q(s, a)$</span><script type="math/tex">Q(s, a)</script></span>表示在状态<span class="MathJaxBox"><span class="MathJax_Preview">$s$</span><script type="math/tex">s</script></span>下，采取动作<span class="MathJaxBox"><span class="MathJax_Preview">$a$</span><script type="math/tex">a</script></span>能够获得的回报的期望：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+Q(s, a) = \mathbb{E}[G_t | s_t = s, a_t = a]
+$$</span><script type="math/tex; mode=display">
+Q(s, a) = \mathbb{E}[G_t | s_t = s, a_t = a]
+</script>
+</div>
+</p>
+<p>价值函数代表了当前状态下的回报期望，是确定的值，不是随机变量。</p>
+<h1 id="_3">优势函数</h1>
+<p>优势函数<span class="MathJaxBox"><span class="MathJax_Preview">$A(s, a)$</span><script type="math/tex">A(s, a)</script></span>表示在状态<span class="MathJaxBox"><span class="MathJax_Preview">$s$</span><script type="math/tex">s</script></span>下，采取动作<span class="MathJaxBox"><span class="MathJax_Preview">$a$</span><script type="math/tex">a</script></span>相比其他动作的优势：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+A(s, a) = Q(s, a) - V(s)
+$$</span><script type="math/tex; mode=display">
+A(s, a) = Q(s, a) - V(s)
+</script>
+</div>
+</p>
+<p>对于某个状态下，所有动作对参数的梯度贡献的均值：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\sum_a \nabla J(\theta;a,s) = \sum_{a} \pi_\theta(a|s) (Q(s,a) -V(s)) = \sum_{a}\pi_\theta(a|s) Q(s,a) - V(s) \sum_{a} \pi_\theta(a|s) \\ = V(s) - V(s) = 0
+$$</span><script type="math/tex; mode=display">
+\sum_a \nabla J(\theta;a,s) = \sum_{a} \pi_\theta(a|s) (Q(s,a) -V(s)) = \sum_{a}\pi_\theta(a|s) Q(s,a) - V(s) \sum_{a} \pi_\theta(a|s) \\ = V(s) - V(s) = 0
+</script>
+</div>
+</p>
+<p>因此，在某个状态下，总会有好的动作和坏的动作。这样相对性的评估，就能够使得策略梯度方法更加稳定。而且因为优势函数<span class="MathJaxBox"><span class="MathJax_Preview">$A(s,a)$</span><script type="math/tex">A(s,a)</script></span>只由当前状态和动作决定，所以在训练时，可以不用采样整个轨迹，增加采样效率。</p>
+<p>但是，计算优势函数会面临很大的挑战：计算回报的期望是不可能的，也就是价值函数是不可计算的。因此在后续出现了多种<strong>优势函数估计</strong>的方法。</p>
+<h1 id="_4">优势函数估计</h1>
+<h2 id="mc">蒙特卡洛（MC）估计</h2>
+<h2 id="td">时序差分（TD）估计</h2>
+<h2 id="gae">广泛优势（GAE）估计</h2>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

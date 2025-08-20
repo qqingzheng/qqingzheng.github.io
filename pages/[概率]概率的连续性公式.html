@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【概率】概率密度传输</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【概率】概率密度传输</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月20日15时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">如何从粒子的角度理解概率密度传输</h1>
+<p>概率密度<span class="MathJaxBox"><span class="MathJax_Preview">$p_t(x)$</span><script type="math/tex">p_t(x)</script></span>的传输方程为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+$$</span><script type="math/tex; mode=display">
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+</script>
+</div>
+</p>
+<p>如何理解这个方程？
+我们考虑空间<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>处的粒子密度是<span class="MathJaxBox"><span class="MathJax_Preview">$p_t(x)$</span><script type="math/tex">p_t(x)</script></span>，在这个空间内存在矢量场<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{u}_t(x)$</span><script type="math/tex">\mathbf{u}_t(x)</script></span>，这个矢量场表示粒子数量在空间中的流动速度（单位时间单位面积的朝着矢量方向流出粒子数量）。</p>
+<p>根据散度的定义，<span class="MathJaxBox"><span class="MathJax_Preview">$\nabla \cdot \mathbf{u}_t(x)$</span><script type="math/tex">\nabla \cdot \mathbf{u}_t(x)</script></span>表示单位时间流出<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>处单位体积的粒子数量。在<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>处单位体积内的粒子数量为<span class="MathJaxBox"><span class="MathJax_Preview">$p_t(x)$</span><script type="math/tex">p_t(x)</script></span>。该体积内，单位时间流出的粒子数量等于单位时间减少的粒子数量，因此可以构建恒等式：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla \cdot \mathbf{u}_t(x) = -\frac{\partial p_t(x)}{\partial t}
+$$</span><script type="math/tex; mode=display">
+\nabla \cdot \mathbf{u}_t(x) = -\frac{\partial p_t(x)}{\partial t}
+</script>
+</div>
+</p>
+<p><span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{u}_t(x)$</span><script type="math/tex">\mathbf{u}_t(x)</script></span>的定义为粒子通量，所以在上面空间中的矢量场为通量场或者说“流量场”。在概率密度传输中，<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{v}_t(x)$</span><script type="math/tex">\mathbf{v}_t(x)</script></span>指的是粒子速度场。</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+粒子通量 = 粒子速度 * 粒子密度
+$$</span><script type="math/tex; mode=display">
+粒子通量 = 粒子速度 * 粒子密度
+</script>
+</div>
+</p>
+<p>所以：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{u}_t(x) = \mathbf{v}_t(x) p_t(x)
+$$</span><script type="math/tex; mode=display">
+\mathbf{u}_t(x) = \mathbf{v}_t(x) p_t(x)
+</script>
+</div>
+</p>
+<p>所以有：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+$$</span><script type="math/tex; mode=display">
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+</script>
+</div>
+</p>
+<p>由于我们把概率理解成了粒子密度，所以还需要加入归一化条件：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\int p_t(x) dx = 1
+$$</span><script type="math/tex; mode=display">
+\int p_t(x) dx = 1
+</script>
+</div>
+</p>
+<h1 id="_2">为什么“粒子通量 = 粒子速度 * 粒子密度”</h1>
+<p>在电磁学里面，电流密度（载流子电荷通量）、载流子平均速度和电荷密度满足下面的关系：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{J}_e = \rho_e \mathbf{v}_e
+$$</span><script type="math/tex; mode=display">
+\mathbf{J}_e = \rho_e \mathbf{v}_e
+</script>
+</div>
+</p>
+<p>取空间上一个圆柱形微元，其底面积为<span class="MathJaxBox"><span class="MathJax_Preview">$A$</span><script type="math/tex">A</script></span>，高度为<span class="MathJaxBox"><span class="MathJax_Preview">$dl$</span><script type="math/tex">dl</script></span>，那么其体积为<span class="MathJaxBox"><span class="MathJax_Preview">$A \cdot dl$</span><script type="math/tex">A \cdot dl</script></span>。在其中有载流子数量为<span class="MathJaxBox"><span class="MathJax_Preview">$dN$</span><script type="math/tex">dN</script></span>。粒子从圆柱底进入，从圆柱顶流出的时间为<span class="MathJaxBox"><span class="MathJax_Preview">$dt = \mathbf{v}_e dl$</span><script type="math/tex">dt = \mathbf{v}_e dl</script></span>。所以：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\rho_e \mathbf{v}_e = \frac{qdN}{Adl} \frac{dl}{dt} = \frac{qdN}{Adt}
+$$</span><script type="math/tex; mode=display">
+\rho_e \mathbf{v}_e = \frac{qdN}{Adl} \frac{dl}{dt} = \frac{qdN}{Adt}
+</script>
+</div>
+</p>
+<p><span class="MathJaxBox"><span class="MathJax_Preview">$\frac{qdN}{Adt}$</span><script type="math/tex">\frac{qdN}{Adt}</script></span>代表单位时间，单位面积流出的电荷数量。所以<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{qdN}{Adt} = \mathbf{J}_e$</span><script type="math/tex">\frac{qdN}{Adt} = \mathbf{J}_e</script></span>。因此有粒子通量等于粒子速度乘以粒子密度。</p>
+<h1 id="_3">凝练概率密度传输的理解</h1>
+<p>在空间中有标量概率密度场<span class="MathJaxBox"><span class="MathJax_Preview">$p_t(x)$</span><script type="math/tex">p_t(x)</script></span>，在空间中存在矢量场<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{v}_t(x)$</span><script type="math/tex">\mathbf{v}_t(x)</script></span>，这个矢量场表示随机变量变化的速度场。所以概率通量为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{u}_t(x) = \mathbf{v}_t(x) p_t(x) = \mathbf{J}
+$$</span><script type="math/tex; mode=display">
+\mathbf{u}_t(x) = \mathbf{v}_t(x) p_t(x) = \mathbf{J}
+</script>
+</div>
+</p>
+<p>由于密度场是守恒的，所以有连续性方程：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+$$</span><script type="math/tex; mode=display">
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{v}_t(x) p_t(x) = 0
+</script>
+</div>
+</p>
+<p>或者可以写成概率流的形式：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{J} = 0
+$$</span><script type="math/tex; mode=display">
+\frac{\partial p_t(x)}{\partial t} + \nabla \cdot \mathbf{J} = 0
+</script>
+</div>
+</p>
+<!-- 我们可以考虑粒子在流场内流动。那么这个场内的矢量可以代表**单位时间流过单位面积的粒子数量**。而这个矢量场的散度则代表**单位时间流出$x$处单位体积的粒子数量**。 -->
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

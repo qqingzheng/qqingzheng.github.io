@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>强化学习：1. 策略梯度算法</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">强化学习：1. 策略梯度算法</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月16日22时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <p>用“起源”似乎有点不恰当，但是笔者希望在该系列文章中较为系统地学习“基于策略”的强化学习算法，不考虑“基于值”的强化学习算法。</p>
+<h1 id="_1">问题陈述和符号定义</h1>
+<p>在马尔可夫决策过程中，有关键的五个要素是：状态空间、动作空间、奖励函数、转移函数和折扣因子。</p>
+<ul>
+<li>状态空间：<span class="MathJaxBox"><span class="MathJax_Preview">$\mathcal{S}$</span><script type="math/tex">\mathcal{S}</script></span></li>
+<li>动作空间：<span class="MathJaxBox"><span class="MathJax_Preview">$\mathcal{A}$</span><script type="math/tex">\mathcal{A}</script></span></li>
+<li>奖励函数：<span class="MathJaxBox"><span class="MathJax_Preview">$r(s_t, a_t)$</span><script type="math/tex">r(s_t, a_t)</script></span></li>
+<li>转移函数：<span class="MathJaxBox"><span class="MathJax_Preview">$p(s_{t+1}, r_{t+1} | s_t, a_t)$</span><script type="math/tex">p(s_{t+1}, r_{t+1} | s_t, a_t)</script></span></li>
+<li>折扣因子：<span class="MathJaxBox"><span class="MathJax_Preview">$\gamma$</span><script type="math/tex">\gamma</script></span></li>
+</ul>
+<p>在这个问题中，我们的目标是希望能够找到一个策略<span class="MathJaxBox"><span class="MathJax_Preview">$\pi_\theta$</span><script type="math/tex">\pi_\theta</script></span>，基于这个策略和初始状态分布，能够采样出奖励最大化的轨迹。我们记轨迹为<span class="MathJaxBox"><span class="MathJax_Preview">$\tau = \{(s_t, a_t, r_t)\}^T_{t=0}$</span><script type="math/tex">\tau = \{(s_t, a_t, r_t)\}^T_{t=0}</script></span>，其中<span class="MathJaxBox"><span class="MathJax_Preview">$T$</span><script type="math/tex">T</script></span>为轨迹的长度。</p>
+<h1 id="_2">问题建模</h1>
+<p>策略梯度算法的建模目标非常直观，就是最大化策略<span class="MathJaxBox"><span class="MathJax_Preview">$\pi_\theta$</span><script type="math/tex">\pi_\theta</script></span>的期望奖励：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max\ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [R(\tau)]
+$$</span><script type="math/tex; mode=display">
+max\ J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [R(\tau)]
+</script>
+</div>
+</p>
+<h1 id="_3">策略梯度方法</h1>
+<p>这个最“直观”的优化目标显然对于梯度上升法来说是不可行的，因为这里面不存在关于<span class="MathJaxBox"><span class="MathJax_Preview">$\theta$</span><script type="math/tex">\theta</script></span>的表达式。我们进行改写：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [R(\tau)] \\ =
+\sum_{\tau \sim \pi_\theta} P(\tau | \theta) \cdot R(\tau) \\
+$$</span><script type="math/tex; mode=display">
+J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [R(\tau)] \\ =
+\sum_{\tau \sim \pi_\theta} P(\tau | \theta) \cdot R(\tau) \\
+</script>
+</div>
+</p>
+<p>此时对<span class="MathJaxBox"><span class="MathJax_Preview">$\theta$</span><script type="math/tex">\theta</script></span>求导，得到：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla J(\theta) = \sum_{\tau \sim \pi_\theta} P(\tau | \theta) \cdot \nabla \log P(\tau | \theta) \cdot R(\tau) \\ = \mathbb{E}_{\tau \sim \pi_\theta} [\nabla \log P(\tau | \theta) \cdot R(\tau)]
+$$</span><script type="math/tex; mode=display">
+\nabla J(\theta) = \sum_{\tau \sim \pi_\theta} P(\tau | \theta) \cdot \nabla \log P(\tau | \theta) \cdot R(\tau) \\ = \mathbb{E}_{\tau \sim \pi_\theta} [\nabla \log P(\tau | \theta) \cdot R(\tau)]
+</script>
+</div>
+</p>
+<p>根据MDP的性质，我们知道：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+P(\tau | \theta) = P(s_0) \prod_{t=0}^{T} P(s_{t+1} | s_t, a_t) \cdot \pi_\theta(a_t | s_t)
+$$</span><script type="math/tex; mode=display">
+P(\tau | \theta) = P(s_0) \prod_{t=0}^{T} P(s_{t+1} | s_t, a_t) \cdot \pi_\theta(a_t | s_t)
+</script>
+</div>
+</p>
+<p>所以：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla log P(\tau | \theta) = \nabla[  P(s_0) + \sum_{t=0}^{T} P(s_{t+1} | s_t, a_t) + \sum_{t=0}^{T} \log \pi_\theta(a_t | s_t)  ] \\ = \nabla \sum_{t=0}^{T} \log \pi_\theta(a_t | s_t)
+$$</span><script type="math/tex; mode=display">
+\nabla log P(\tau | \theta) = \nabla[  P(s_0) + \sum_{t=0}^{T} P(s_{t+1} | s_t, a_t) + \sum_{t=0}^{T} \log \pi_\theta(a_t | s_t)  ] \\ = \nabla \sum_{t=0}^{T} \log \pi_\theta(a_t | s_t)
+</script>
+</div>
+</p>
+<p>所以<span class="MathJaxBox"><span class="MathJax_Preview">$\nabla J(\theta)$</span><script type="math/tex">\nabla J(\theta)</script></span>可以改写为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [\sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) \underbrace{\sum_{k=t}^{T} \gamma^{k-t} r_k}_{G_t}]
+$$</span><script type="math/tex; mode=display">
+\nabla J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} [\sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) \underbrace{\sum_{k=t}^{T} \gamma^{k-t} r_k}_{G_t}]
+</script>
+</div>
+</p>
+<p>至此，可以使用蒙托卡洛方法来估计<span class="MathJaxBox"><span class="MathJax_Preview">$\nabla J(\theta)$</span><script type="math/tex">\nabla J(\theta)</script></span>，实现梯度上升。</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) G_t
+$$</span><script type="math/tex; mode=display">
+\nabla J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \nabla \log \pi_\theta(a_t | s_t) G_t
+</script>
+</div>
+</p>
+<h1 id="_4">问题</h1>
+<p>Q：为什么需要折扣因子？</p>
+<p>如果<span class="MathJaxBox"><span class="MathJax_Preview">$R(\tau)= \sum^{T}_{t=0} r_t$</span><script type="math/tex">R(\tau)= \sum^{T}_{t=0} r_t</script></span>，那么当<span class="MathJaxBox"><span class="MathJax_Preview">$T \rightarrow \infty$</span><script type="math/tex">T \rightarrow \infty</script></span>时，<span class="MathJaxBox"><span class="MathJax_Preview">$R(\tau)$</span><script type="math/tex">R(\tau)</script></span>会无限大，这是发散的，会导致没有收敛的策略。因此，我们需要引入折扣因子<span class="MathJaxBox"><span class="MathJax_Preview">$\gamma \in (0, 1)$</span><script type="math/tex">\gamma \in (0, 1)</script></span>，将奖励函数改写为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+R(\tau) = \sum^{T}_{t=0} \gamma^t \cdot r_t \lt R_{max} \underbrace{\sum^{T}_{t=0} \gamma^t}_{几何级数} = R_{max} \frac{1}{1-\gamma}
+$$</span><script type="math/tex; mode=display">
+R(\tau) = \sum^{T}_{t=0} \gamma^t \cdot r_t \lt R_{max} \underbrace{\sum^{T}_{t=0} \gamma^t}_{几何级数} = R_{max} \frac{1}{1-\gamma}
+</script>
+</div>
+</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

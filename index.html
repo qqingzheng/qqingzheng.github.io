@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/code.css">
+    <link rel="stylesheet" href="static/main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Chestnut's Space</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <p class="text-red-500 text-base font-semibold">Profile</p>
+            <a href="blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <main class="px-4">
+        <div class="mb-12">
+            <h1 class="text-3xl mb-4 text-gray-800">Zongjian Li's Space</h1>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <a href="https://scholar.google.com/citations?user=_TT3r1cAAAAJ&hl=en" class="text-gray-600 text-sm hover:text-red-500 transition-colors">[Google Scholar]</a>
+                <a href="https://github.com/qqingzheng" class="text-gray-600 text-sm hover:text-red-500 transition-colors">[Github]</a>
+                <a href="mailto:zongjianli25@stu.pku.edu.cn" class="text-gray-600 text-sm hover:text-red-500 transition-colors">[Email]</a>
+            </div>
+        </div>
+
+        <section class="mb-12">
+            <h2 class="text-2xl mb-6 text-gray-800 border-b-2 border-red-500 pb-2">My Projects</h2>
+            
+            <div class="mb-6 p-5 bg-gray-50 rounded-lg">
+                <div class="text-lg mb-2">
+                    <a href="https://qqingzheng.github.io/projects/spark_wan/" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">Spark-Wan: Progressive Adversarial Distillation for High-Quality Video Generation</a>
+                </div>
+                <div class="text-gray-600 leading-relaxed">A progressive adversarial distillation method based on Wan-T2V-14B, achieving high-quality video diffusion generation in 4 steps. Utilized techniques such as context parallel and FSDP2 to achieve adversarial distillation of a 14B model at 720P resolution and 81 frames.</div>
+            </div>
+            
+            <div class="mb-6 p-5 bg-gray-50 rounded-lg">
+                <div class="text-lg mb-2">
+                    <a href="http://nil.csail.mit.edu/6.824/2021/schedule.html" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">MIT 6.824 Distributed Systems (Ongoing)</a>
+                </div>
+                <div class="text-gray-600 leading-relaxed">A distributed computing course from MIT, covering distributed systems, distributed algorithms, and distributed computing.</div>
+            </div>
+            
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl mb-6 text-gray-800 border-b-2 border-red-500 pb-2">My Papers</h2>
+            <p class="italic text-gray-600 mb-5">* means equal contribution.</p>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <strong class="text-red-500 font-bold mr-2">[CVPR 2025]</strong>
+                
+                <a href="https://github.com/PKU-YuanGroup/WF-VAE" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">WF-VAE: Enhancing Video VAE by Wavelet-Driven Energy Flow for Latent Video Diffusion Model</a><br>
+                <span class="text-gray-600 text-sm"><b>Zongjian Li*</b>, Bin Lin*, Yang Ye, Liuhan Chen, Xinhua Cheng, Shenghai Yuan, Li Yuan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <strong class="text-red-500 font-bold mr-2">[AAAI 2025]</strong>
+                
+                <a href="https://anjingkun.github.io/AGFSync/" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">AGFSync: Leveraging AI-Generated Feedback for Preference Optimization in Text-to-Image Generation</a><br>
+                <span class="text-gray-600 text-sm">Jingkun An*, Yinghao Zhu*, <b>Zongjian Li*</b> , Enshen Zhou, Haoran Feng, Xijie Huang, Bohua Chen, Yemin Shi, Chengwei Pan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <strong class="text-red-500 font-bold mr-2">[ICME 2025]</strong>
+                
+                <a href="https://arxiv.org/abs/2409.01199" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">OD-VAE: An Omni-dimensional Video Compressor for Improving Latent Video Diffusion Model</a><br>
+                <span class="text-gray-600 text-sm">Liuhan Chen*, <b>Zongjian Li*</b>, Bin Lin, Bin Zhu, Qian Wang, Shenghai Yuan, Xing Zhou, Xinhua Cheng, Li Yuan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <a href="https://arxiv.org/abs/2506.03147" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">UniWorld: High-Resolution Semantic Encoders for Unified Visual Understanding and Generation</a><br>
+                <span class="text-gray-600 text-sm">Bin Lin, <b>Zongjian Li</b>, Xinhua Cheng, Yuwei Niu, Yang Ye, Xianyi He, Shenghai Yuan, Wangbo Yu, Shaodong Wang, Yunyang Ge, Yatian Pang, Li Yuan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <a href="https://arxiv.org/abs/2505.20275" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">ImgEdit: A Unified Image Editing Dataset and Benchmark</a><br>
+                <span class="text-gray-600 text-sm">Yang Ye*, Xianyi He*, <b>Zongjian Li*</b>, Bin Lin*, Shenghai Yuan*, Zhiyuan Yan*, Bohan Hou, Li Yuan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <a href="https://arxiv.org/abs/2412.00131" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">Open-Sora Plan: Open-Source Large Video Generation Model</a><br>
+                <span class="text-gray-600 text-sm">Bin Lin, Yunyang Ge, Xinhua Cheng, <b>Zongjian Li</b>, Bin Zhu, Shaodong Wang, Xianyi He, Yang Ye, Shenghai Yuan, Liuhan Chen, Tanghui Jia, Junwu Zhang, Zhenyu Tang, Yatian Pang, Bin She, Cen Yan, Zhiheng Hu, Xiaoyi Dong, Lin Chen, Zhang Pan, Xing Zhou, Shaoling Dong, Yonghong Tian, Li Yuan</span>
+            </div>
+            
+            <div class="mb-5 p-4 border-l-4 border-red-500 bg-gray-50">
+                
+                <a href="https://arxiv.org/abs/2306.16092" class="text-gray-800 font-semibold hover:text-red-500 transition-colors no-underline">Chatlaw: A Multi-Agent Collaborative Legal Assistant with Knowledge Graph Enhanced Mixture-of-Experts Large Language Model</a><br>
+                <span class="text-gray-600 text-sm">Jiaxi Cui*, Munan Ning*, <b>Zongjian Li*</b>, Bohua Chen, Yang Yan, Hao Li, Bin Ling, Yonghong Tian, Li Yuan</span>
+            </div>
+            
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl mb-6 text-gray-800 border-b-2 border-red-500 pb-2">Latest <a href="blog.html">Blog</a></h2>
+            
+            <article class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium mb-2 md:mb-0">
+                    <a href="pages/随机过程：1. 朗之万方程仿真.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">随机过程：1. 朗之万方程仿真</a>
+                </h3>
+                <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">08月20日15时</time>
+            </article>
+            
+            <article class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium mb-2 md:mb-0">
+                    <a href="pages/[概率]概率的连续性公式.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">【概率】概率密度传输</a>
+                </h3>
+                <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">08月20日15时</time>
+            </article>
+            
+            <article class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium mb-2 md:mb-0">
+                    <a href="pages/生成模型：2. 引导生成.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">生成模型：1. 生成模型建模</a>
+                </h3>
+                <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">08月20日14时</time>
+            </article>
+            
+            <article class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium mb-2 md:mb-0">
+                    <a href="pages/强化学习：如何理解价值、优势和回报 .html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">强化学习：如何理解价值、优势、奖励和回报</a>
+                </h3>
+                <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">08月19日00时</time>
+            </article>
+            
+            <article class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium mb-2 md:mb-0">
+                    <a href="pages/生成模型：1. 生成模型建模.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">生成模型：1. 生成模型建模</a>
+                </h3>
+                <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">08月18日21时</time>
+            </article>
+            
+        </section>
+    </main>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【概率】Z=XY的PDF</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【概率】Z=XY的PDF</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月15日14时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <p><strong>题目：已知<span class="MathJaxBox"><span class="MathJax_Preview">$X$</span><script type="math/tex">X</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$Y$</span><script type="math/tex">Y</script></span>的PDF分别为<span class="MathJaxBox"><span class="MathJax_Preview">$p_X(x)$</span><script type="math/tex">p_X(x)</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$p_Y(y)$</span><script type="math/tex">p_Y(y)</script></span>，求<span class="MathJaxBox"><span class="MathJax_Preview">$Z=XY$</span><script type="math/tex">Z=XY</script></span>的PDF。</strong></p>
+<p><span color="red">法一：</span> 求<span class="MathJaxBox"><span class="MathJax_Preview">$F(z)$</span><script type="math/tex">F(z)</script></span>的CDF，然后求导得到PDF。</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+F(z) = p_{Z}(Z &lt; z) = p_{Z}(XY &lt; z)
+$$</span><script type="math/tex; mode=display">
+F(z) = p_{Z}(Z < z) = p_{Z}(XY < z)
+</script>
+</div>
+</p>
+<p>通过二重积分可以求得CDF：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+F(z) = \int\int_{xy &lt; z} p_X(x)p_Y(y)dxdy
+$$</span><script type="math/tex; mode=display">
+F(z) = \int\int_{xy < z} p_X(x)p_Y(y)dxdy
+</script>
+</div>
+</p>
+<p>我们以<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>划分积分区域：当<span class="MathJaxBox"><span class="MathJax_Preview">$x &gt; 0$</span><script type="math/tex">x > 0</script></span>时，<span class="MathJaxBox"><span class="MathJax_Preview">$y &lt; z/x$</span><script type="math/tex">y < z/x</script></span>；当<span class="MathJaxBox"><span class="MathJax_Preview">$x &lt; 0$</span><script type="math/tex">x < 0</script></span>时，<span class="MathJaxBox"><span class="MathJax_Preview">$y &gt; z/x$</span><script type="math/tex">y > z/x</script></span>。所以：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+F(z) = \int_{0}^{\infty} p_X(x) \int_{-\infty}^{z/x} p_Y(y)dydx + \int_{-\infty}^{0} p_X(x) \int_{z/x}^{\infty} p_Y(y)dydx
+$$</span><script type="math/tex; mode=display">
+F(z) = \int_{0}^{\infty} p_X(x) \int_{-\infty}^{z/x} p_Y(y)dydx + \int_{-\infty}^{0} p_X(x) \int_{z/x}^{\infty} p_Y(y)dydx
+</script>
+</div>
+</p>
+<p>通过对CDF求导，可以得到随机变量Z的PDF：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p_Z(z) = \frac{dF(z)}{dz} = \frac{d}{dz}\left(\int_{0}^{\infty} p_X(x) dx \int_{-\infty}^{z/x} p_Y(y)dy + \int_{-\infty}^{0} p_X(x) dx \int_{z/x}^{\infty} p_Y(y)dy\right)
+$$</span><script type="math/tex; mode=display">
+p_Z(z) = \frac{dF(z)}{dz} = \frac{d}{dz}\left(\int_{0}^{\infty} p_X(x) dx \int_{-\infty}^{z/x} p_Y(y)dy + \int_{-\infty}^{0} p_X(x) dx \int_{z/x}^{\infty} p_Y(y)dy\right)
+</script>
+</div>
+</p>
+<blockquote>
+<p>这里需要用到莱布尼茨积分法则（变限积分求导），即：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{d}{dz}\left(\int_{a(z)}^{b(z)} f(x, z)dx\right) = f(b(z), z)b'(z) - f(a(z), z)a'(z) + \int_{a(z)}^{b(z)} \frac{\partial f}{\partial z}(x, z)dx
+$$</span><script type="math/tex; mode=display">
+\frac{d}{dz}\left(\int_{a(z)}^{b(z)} f(x, z)dx\right) = f(b(z), z)b'(z) - f(a(z), z)a'(z) + \int_{a(z)}^{b(z)} \frac{\partial f}{\partial z}(x, z)dx
+</script>
+</div>
+</p>
+</blockquote>
+<p>根据莱布尼茨积分法则：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p_Z(z) = \frac{d}{dz}\left(\int_{0}^{\infty} p_X(x) dx \int_{-\infty}^{z/x} p_Y(y)dy\right) + \frac{d}{dz}\left(\int_{-\infty}^{0} p_X(x) dx \int_{z/x}^{\infty} p_Y(y)dy\right) \\ = \int_{0}^{\infty} p_X(x) p_Y(\frac{z}{x})\frac{1}{x} dx - \int_{-\infty}^{0} p_X(x) p_Y(\frac{z}{x})\frac{1}{x} dx \\
+= \int_{-\infty}^{+\infty} p_X(x) p_Y(\frac{z}{x})\frac{1}{|x|} dx
+$$</span><script type="math/tex; mode=display">
+p_Z(z) = \frac{d}{dz}\left(\int_{0}^{\infty} p_X(x) dx \int_{-\infty}^{z/x} p_Y(y)dy\right) + \frac{d}{dz}\left(\int_{-\infty}^{0} p_X(x) dx \int_{z/x}^{\infty} p_Y(y)dy\right) \\ = \int_{0}^{\infty} p_X(x) p_Y(\frac{z}{x})\frac{1}{x} dx - \int_{-\infty}^{0} p_X(x) p_Y(\frac{z}{x})\frac{1}{x} dx \\
+= \int_{-\infty}^{+\infty} p_X(x) p_Y(\frac{z}{x})\frac{1}{|x|} dx
+</script>
+</div>
+</p>
+<p><span color="red">法二：</span> 辅助变量法。定义辅助变量 -&gt; 计算雅可比行列式 -&gt; 得到联合PDF变换 -&gt; 边缘化积分。</p>
+<blockquote>
+<p>随机变量<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{X} = (X_1, X_2, \cdots, X_n)$</span><script type="math/tex">\mathbf{X} = (X_1, X_2, \cdots, X_n)</script></span>通过变换<span class="MathJaxBox"><span class="MathJax_Preview">$T$</span><script type="math/tex">T</script></span>映射到<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{Y} = (Y_1, Y_2, \cdots, Y_n)$</span><script type="math/tex">\mathbf{Y} = (Y_1, Y_2, \cdots, Y_n)</script></span>，则有：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p_{\mathbf{Y}}(\mathbf{y}) = p_{\mathbf{X}}(T^{-1}(\mathbf{y})) |J_{T^{-1}}|
+$$</span><script type="math/tex; mode=display">
+p_{\mathbf{Y}}(\mathbf{y}) = p_{\mathbf{X}}(T^{-1}(\mathbf{y})) |J_{T^{-1}}|
+</script>
+</div>
+</p>
+</blockquote>
+<p>定义辅助变量<span class="MathJaxBox"><span class="MathJax_Preview">$W=X$</span><script type="math/tex">W=X</script></span>，那么<span class="MathJaxBox"><span class="MathJax_Preview">$Y=\frac{Z}{W}$</span><script type="math/tex">Y=\frac{Z}{W}</script></span>。随机变量<span class="MathJaxBox"><span class="MathJax_Preview">$XY$</span><script type="math/tex">XY</script></span>，<span class="MathJaxBox"><span class="MathJax_Preview">$X$</span><script type="math/tex">X</script></span>通过变换</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{T} = \begin{cases}
+Z = XY \\
+W = X
+\end{cases}
+$$</span><script type="math/tex; mode=display">
+\mathbf{T} = \begin{cases}
+Z = XY \\
+W = X
+\end{cases}
+</script>
+</div>
+</p>
+<p>映射到随机变量<span class="MathJaxBox"><span class="MathJax_Preview">$Z$</span><script type="math/tex">Z</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$W$</span><script type="math/tex">W</script></span>。有逆变换：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{T}^{-1} = \begin{cases}
+X = W \\
+Y = \frac{Z}{W}
+\end{cases}
+$$</span><script type="math/tex; mode=display">
+\mathbf{T}^{-1} = \begin{cases}
+X = W \\
+Y = \frac{Z}{W}
+\end{cases}
+</script>
+</div>
+</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+J_{T^{-1}} = \begin{bmatrix}
+\frac{\partial x}{\partial z} &amp; \frac{\partial x}{\partial w} \\
+\frac{\partial y}{\partial z} &amp; \frac{\partial y}{\partial w} \\
+\end{bmatrix} = \begin{bmatrix}
+0 &amp; 1 \\
+\frac{1}{w} &amp; -\frac{z}{w^2} \\
+\end{bmatrix}
+$$</span><script type="math/tex; mode=display">
+J_{T^{-1}} = \begin{bmatrix}
+\frac{\partial x}{\partial z} & \frac{\partial x}{\partial w} \\
+\frac{\partial y}{\partial z} & \frac{\partial y}{\partial w} \\
+\end{bmatrix} = \begin{bmatrix}
+0 & 1 \\
+\frac{1}{w} & -\frac{z}{w^2} \\
+\end{bmatrix}
+</script>
+</div>
+</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p_{Z,W}(z,w) = p_{X,Y}(w, \frac{z}{w}) |J_{T^{-1}}| = p_X(w)p_Y(\frac{z}{w}) \left| \frac{1}{w} \right| = p_X(w)p_Y(\frac{z}{w}) \frac{1}{|w|}
+$$</span><script type="math/tex; mode=display">
+p_{Z,W}(z,w) = p_{X,Y}(w, \frac{z}{w}) |J_{T^{-1}}| = p_X(w)p_Y(\frac{z}{w}) \left| \frac{1}{w} \right| = p_X(w)p_Y(\frac{z}{w}) \frac{1}{|w|}
+</script>
+</div>
+</p>
+<p>随机变量<span class="MathJaxBox"><span class="MathJax_Preview">$Z$</span><script type="math/tex">Z</script></span>的PDF为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p_Z(z) = \int_{-\infty}^{+\infty} p_{Z,W}(z,w) dw = \int_{-\infty}^{+\infty} p_X(w)p_Y(\frac{z}{w}) \frac{1}{|w|} dw
+$$</span><script type="math/tex; mode=display">
+p_Z(z) = \int_{-\infty}^{+\infty} p_{Z,W}(z,w) dw = \int_{-\infty}^{+\infty} p_X(w)p_Y(\frac{z}{w}) \frac{1}{|w|} dw
+</script>
+</div>
+</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

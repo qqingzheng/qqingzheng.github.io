@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>高斯极大似然估计与MSE等价</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">高斯极大似然估计与MSE等价</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月16日22时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <p>平常做训练，很多情况下都是直接用MSE损失，从优化的角度来看，这个可以理解为希望模型输出与真实值差距越小越好。但是实际在大部分模型建模过程中都是使用的概率模型，并且采用极大似然的方式对模型进行优化。怎么统一这两种视角呢？</p>
+<p>考虑极大似然估计问题：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max\quad \mathbb{E}_{x \sim p(x), z \sim p(z)} log p(x|z)
+$$</span><script type="math/tex; mode=display">
+max\quad \mathbb{E}_{x \sim p(x), z \sim p(z)} log p(x|z)
+</script>
+</div>
+</p>
+<p>我们假设p(x|z)是高斯分布，即：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+p(x|z) = N(x; \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}} exp(\frac{(x-\mu)^2}{2\sigma^2})
+$$</span><script type="math/tex; mode=display">
+p(x|z) = N(x; \mu, \sigma^2) = \frac{1}{\sqrt{2 \pi \sigma^2}} exp(\frac{(x-\mu)^2}{2\sigma^2})
+</script>
+</div>
+</p>
+<p>取对数：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+log p(x|z) = - \frac{1}{2} log(2 \pi \sigma_z^2) - \frac{(x-\mu_z)^2}{2\sigma_z^2}
+$$</span><script type="math/tex; mode=display">
+log p(x|z) = - \frac{1}{2} log(2 \pi \sigma_z^2) - \frac{(x-\mu_z)^2}{2\sigma_z^2}
+</script>
+</div>
+</p>
+<p>因此优化目标转为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max \quad \mathbb{E}_{x \sim p(x), z \sim p(z)} - \frac{1}{2} log(2 \pi \sigma_z^2) - \frac{(x-\mu_z)^2}{2\sigma_z^2}
+$$</span><script type="math/tex; mode=display">
+max \quad \mathbb{E}_{x \sim p(x), z \sim p(z)} - \frac{1}{2} log(2 \pi \sigma_z^2) - \frac{(x-\mu_z)^2}{2\sigma_z^2}
+</script>
+</div>
+</p>
+<p>我们发现，如果<span class="MathJaxBox"><span class="MathJax_Preview">$\sigma_z = C$</span><script type="math/tex">\sigma_z = C</script></span>，那么优化目标就等价于MSE损失：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+max \quad \mathbb{E}_{x \sim p(x), z \sim p(z)} (x-\mu_z)^2
+$$</span><script type="math/tex; mode=display">
+max \quad \mathbb{E}_{x \sim p(x), z \sim p(z)} (x-\mu_z)^2
+</script>
+</div>
+</p>
+<p>所以，极大似然估计等价在满足以下假设时是与MSE等价的：</p>
+<ul>
+<li>输出条件概率分布是高斯分布。</li>
+<li>这个高分布的方差是固定的。</li>
+</ul>
+<p>并且在推理时，我们通常会直接取<span class="MathJaxBox"><span class="MathJax_Preview">$\mu_z$</span><script type="math/tex">\mu_z</script></span>作为模型的输出（高斯分布的均值）。</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

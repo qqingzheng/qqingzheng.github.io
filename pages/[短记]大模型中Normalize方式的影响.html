@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【短记】大模型中Normalize方式的影响</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【短记】大模型中Normalize方式的影响</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月15日14时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <p>今天看到了一篇文章《Mix-LN: Unleashing the Power of Deeper Layers by Combining Pre-LN and Post-LN》，分析了在大模型中，Post或Pre的Normalize方式对模型训练的影响。十分简单的分析，但是十分有启发性。</p>
+<h1 id="pre-or-post-normalize">Pre or Post Normalize</h1>
+<p>对于一个残差块，输入为<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>，输出为<span class="MathJaxBox"><span class="MathJax_Preview">$y$</span><script type="math/tex">y</script></span>。目前大模型基本采用了两种的Normalize方式，分别为Pre-Norm：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+y_{pre} = x + \mathcal{F}(\textit{LN}(x)),
+$$</span><script type="math/tex; mode=display">
+y_{pre} = x + \mathcal{F}(\textit{LN}(x)),
+</script>
+</div>
+</p>
+<p>和Post-Norm：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+y_{post} = \textit{LN}(x + \mathcal{F}(x)).
+$$</span><script type="math/tex; mode=display">
+y_{post} = \textit{LN}(x + \mathcal{F}(x)).
+</script>
+</div>
+</p>
+<p>其中<span class="MathJaxBox"><span class="MathJax_Preview">$\mathcal{F}$</span><script type="math/tex">\mathcal{F}</script></span>为残差块中的前馈网络，<span class="MathJaxBox"><span class="MathJax_Preview">$\textit{LN}$</span><script type="math/tex">\textit{LN}</script></span>为Layer Normalization。</p>
+<p>对于LN：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\textit{LN}(x) = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} \cdot \gamma + \beta.
+$$</span><script type="math/tex; mode=display">
+\textit{LN}(x) = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} \cdot \gamma + \beta.
+</script>
+</div>
+</p>
+<p>为了简化分析，我们忽略掉LN可学习的尺度和偏移参数，并且假设输入<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>的分布是固定的（即<span class="MathJaxBox"><span class="MathJax_Preview">$\mu$</span><script type="math/tex">\mu</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$\sigma$</span><script type="math/tex">\sigma</script></span>是常数），对LN求导：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial \textit{LN}}{\partial x} = \frac{1}{\sqrt{\sigma^2 + \epsilon}}.
+$$</span><script type="math/tex; mode=display">
+\frac{\partial \textit{LN}}{\partial x} = \frac{1}{\sqrt{\sigma^2 + \epsilon}}.
+</script>
+</div>
+</p>
+<p>对两种方法求导：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial y_{pre}}{\partial x} = 1 + \frac{\partial \mathcal{F}}{\partial \textit{LN}} \cdot \frac{\partial \textit{LN}}{\partial x} = 1 + \frac{\partial \mathcal{F}}{\partial \textit{LN}} \cdot \frac{1}{\sqrt{\sigma^2 + \epsilon}}.
+$$</span><script type="math/tex; mode=display">
+\frac{\partial y_{pre}}{\partial x} = 1 + \frac{\partial \mathcal{F}}{\partial \textit{LN}} \cdot \frac{\partial \textit{LN}}{\partial x} = 1 + \frac{\partial \mathcal{F}}{\partial \textit{LN}} \cdot \frac{1}{\sqrt{\sigma^2 + \epsilon}}.
+</script>
+</div>
+</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial y_{post}}{\partial x} = \frac{\partial \textit{LN}}{\partial (x + \mathcal{F}(x))} \cdot \frac{\partial (x + \mathcal{F}(x))}{\partial x} = \frac{\partial \textit{LN}}{\partial (x + \mathcal{F}(x))} \cdot (1 + \frac{\partial \mathcal{F}}{\partial x}) = \frac{1}{\sqrt{\sigma^2 + \epsilon}} \cdot (1 + \frac{\partial \mathcal{F}}{\partial x}).
+$$</span><script type="math/tex; mode=display">
+\frac{\partial y_{post}}{\partial x} = \frac{\partial \textit{LN}}{\partial (x + \mathcal{F}(x))} \cdot \frac{\partial (x + \mathcal{F}(x))}{\partial x} = \frac{\partial \textit{LN}}{\partial (x + \mathcal{F}(x))} \cdot (1 + \frac{\partial \mathcal{F}}{\partial x}) = \frac{1}{\sqrt{\sigma^2 + \epsilon}} \cdot (1 + \frac{\partial \mathcal{F}}{\partial x}).
+</script>
+</div>
+</p>
+<p>在实际训练中，我们会观察到<span class="MathJaxBox"><span class="MathJax_Preview">$\sigma$</span><script type="math/tex">\sigma</script></span>的值会随着训练的进行而逐渐变大，这会导致什么结果呢？</p>
+<p>对于<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{\partial y_{pre}}{\partial x}$</span><script type="math/tex">\frac{\partial y_{pre}}{\partial x}</script></span>而言，<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{1}{\sqrt{\sigma^2 + \epsilon}}$</span><script type="math/tex">\frac{1}{\sqrt{\sigma^2 + \epsilon}}</script></span>会逐渐变小，导致<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{\partial y_{pre}}{\partial x} = 1$</span><script type="math/tex">\frac{\partial y_{pre}}{\partial x} = 1</script></span>。一般而言，深层的<span class="MathJaxBox"><span class="MathJax_Preview">$\sigma$</span><script type="math/tex">\sigma</script></span>会远大于浅层，因此在深层的残差块会失去意义。</p>
+<p>对于<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{\partial y_{post}}{\partial x}$</span><script type="math/tex">\frac{\partial y_{post}}{\partial x}</script></span>而言，<span class="MathJaxBox"><span class="MathJax_Preview">$\sigma$</span><script type="math/tex">\sigma</script></span>指的是<span class="MathJaxBox"><span class="MathJax_Preview">$x + \mathcal{F}(x)$</span><script type="math/tex">x + \mathcal{F}(x)</script></span>的标准差。<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{1}{\sigma^2 + \epsilon} &lt; 1$</span><script type="math/tex">\frac{1}{\sigma^2 + \epsilon} < 1</script></span>，随着梯度的回传，浅层的梯度会消失。</p>
+<h1 id="_1">实验观察</h1>
+<p>基于上面的分析，原论文中对于在不同Normalize方式下训练的大模型进行了“删层”实验，即在训练过程中，删除一些层，观察模型的性能变化。</p>
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; margin-right: 10px; text-align: center;">
+    <img src="/assets/[短记]大模型中Normalize方式的影响/image.png" alt="Image 1" style="width: 80%;">
+    <p style="color: gray; font-size: 0.9em;">BERT采用的是Post-Norm，而LLama-2采用的是Pre-Norm。由图可以发现，Post-Norm在删除浅层块后，性能变化不明显，说明浅层块对模型影响不大。相反，Pre-Norm在删除浅层块后，性能变化明显，说明浅层块对模型影响很大。</p>
+  </div>
+</div>
+
+<!-- 
+# AdaLN
+
+因为笔者做的工作采用了AdaLN，所以下面对AdaLN进行类似的分析，看看能不能得到有意思的结论。
+
+$$
+p_{pre} = x + g \cdot \mathcal{F}(\textit{AdaLN}(x))
+$$
+
+$$
+p_{post} = \textit{AdaLN}(x + g(x) \cdot \mathcal{F}(x))
+$$
+
+其中：
+
+$$
+\textit{AdaLN}(x) = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}} \cdot \gamma(x) + \beta(x).
+$$
+
+$$
+\frac{\partial \textit{AdaLN}}{\partial x} = \frac{1}{\sqrt{\sigma^2 + \epsilon}} \cdot (\gamma + \frac{\partial \gamma}{\partial x} \cdot x - \mu \frac{\partial \gamma}{\partial x}) + \frac{\partial \beta}{\partial x}.
+$$
+
+因此求导：
+
+$$
+\frac{\partial p_{pre}}{\partial x} = 1 + \frac{\partial g}{\partial x} \cdot \mathcal{F}(\textit{AdaLN}(x)) + \frac{\partial \mathcal{F}}{\partial \textit{AdaLN}} \cdot \frac{\partial \textit{AdaLN}}{\partial x} \cdot g(x).
+$$
+
+$$
+\frac{\partial p_{post}}{\partial x} = \frac{\partial \textit{AdaLN}}{\partial (x + g(x) \cdot \mathcal{F}(x))} \cdot (1 + \frac{\partial g}{\partial x} \cdot \mathcal{F}(x) + \frac{\partial \mathcal{F}}{\partial x} \cdot g(x)).
+$$ -->
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

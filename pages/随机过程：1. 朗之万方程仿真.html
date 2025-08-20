@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>随机过程：1. 朗之万方程仿真</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">随机过程：1. 朗之万方程仿真</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月20日15时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">朗之万方程</h1>
+<p><a href="https://zh.wikipedia.org/wiki/%E6%9C%97%E4%B9%8B%E4%B8%87%E6%96%B9%E7%A8%8B">朗之万方程</a>描述悬浮在流体中的粒子所做的布朗运动。一个粒子在流体中时，会受到流体的阻力，并且阻力大小与粒子速度成正比。在这个正比关系的基础上，这个力还会受到流体带来的“随机力”。这个关系可以由牛顿第二定理和随机过程建立：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\underbrace{m \frac{d^2 x}{dt^2}}_{\text{粒子受力}} = \underbrace{- \gamma \frac{d x}{dt}}_{\text{与速度方向相反的阻力}} + \underbrace{\sqrt{2\gamma k_B T}\mathbf{R}(t)}_{\text{随机力}}
+$$</span><script type="math/tex; mode=display">
+\underbrace{m \frac{d^2 x}{dt^2}}_{\text{粒子受力}} = \underbrace{- \gamma \frac{d x}{dt}}_{\text{与速度方向相反的阻力}} + \underbrace{\sqrt{2\gamma k_B T}\mathbf{R}(t)}_{\text{随机力}}
+</script>
+</div>
+</p>
+<p>其中<span class="MathJaxBox"><span class="MathJax_Preview">$\gamma$</span><script type="math/tex">\gamma</script></span>可以理解为阻力系数，<span class="MathJaxBox"><span class="MathJax_Preview">$k_B$</span><script type="math/tex">k_B</script></span>为玻尔兹曼常数，<span class="MathJaxBox"><span class="MathJax_Preview">$T$</span><script type="math/tex">T</script></span>为温度，<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{R}(t)$</span><script type="math/tex">\mathbf{R}(t)</script></span>为随机过程，通常为高斯噪声。</p>
+<p><span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{R}(t)$</span><script type="math/tex">\mathbf{R}(t)</script></span>满足：</p>
+<ul>
+<li>期望为 0:<span class="MathJaxBox"><span class="MathJax_Preview">$⟨\mathbf{R}(t)⟩ = 0$</span><script type="math/tex">⟨\mathbf{R}(t)⟩ = 0</script></span></li>
+<li>不同时间<span class="MathJaxBox"><span class="MathJax_Preview">$t$</span><script type="math/tex">t</script></span>的协方差 0:<span class="MathJaxBox"><span class="MathJax_Preview">$⟨\mathbf{R}(t)\mathbf{R}(t')⟩ = \delta(t-t')$</span><script type="math/tex">⟨\mathbf{R}(t)\mathbf{R}(t')⟩ = \delta(t-t')</script></span>。</li>
+</ul>
+<h1 id="_2">过阻尼朗之万方程</h1>
+<p>假如质量极小<span class="MathJaxBox"><span class="MathJax_Preview">$m\rightarrow 0 $</span><script type="math/tex">m\rightarrow 0 </script></span>，阻力系数<span class="MathJaxBox"><span class="MathJax_Preview">$\gamma$</span><script type="math/tex">\gamma</script></span>很大，那么这个粒子的运动就被称为过阻尼运动。过阻尼运动有以下特点：加速/减速过程极快（可以理解为速度直接与力相关，没有加速度的概念了）。这时：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+0 \approx - \gamma \frac{d x}{dt} + \sqrt{2\gamma k_B T}\mathbf{R}(t)
+$$</span><script type="math/tex; mode=display">
+0 \approx - \gamma \frac{d x}{dt} + \sqrt{2\gamma k_B T}\mathbf{R}(t)
+</script>
+</div>
+</p>
+<p>假如粒子在流体中像一个“弹簧”固定在某个位置，那么粒子除了随机力，还会受到弹性力：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\gamma \frac{d x}{dt} = - \nabla_x E_p + \sqrt{2\gamma k_B T}\mathbf{R}(t) \\
+= - kx  + \sqrt{2\gamma k_B T}\mathbf{R}(t)
+$$</span><script type="math/tex; mode=display">
+\gamma \frac{d x}{dt} = - \nabla_x E_p + \sqrt{2\gamma k_B T}\mathbf{R}(t) \\
+= - kx  + \sqrt{2\gamma k_B T}\mathbf{R}(t)
+</script>
+</div>
+</p>
+<p>其中<span class="MathJaxBox"><span class="MathJax_Preview">$k$</span><script type="math/tex">k</script></span>为弹簧常数。</p>
+<h1 id="_3">概率分布</h1>
+<p>随机微分方程可以使用 Fokker-Planck 方程来建立<span class="MathJaxBox"><span class="MathJax_Preview">$p(x,t)$</span><script type="math/tex">p(x,t)</script></span>的概率分布。</p>
+<p>具体来说，对于一般的朗之万方程：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{dx}{dt} = A(x) + B(x)\mathbf{R}(t)
+$$</span><script type="math/tex; mode=display">
+\frac{dx}{dt} = A(x) + B(x)\mathbf{R}(t)
+</script>
+</div>
+</p>
+<p>Fokker-Planck 方程为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial p(x,t)}{\partial t} = - \frac{\partial}{\partial x} \left( A(x) p(x,t) \right) + \frac{1}{2} \frac{\partial^2}{\partial x^2}( B(x)^2 p(x,t)) = - \nabla \cdot \mathbf{J}
+$$</span><script type="math/tex; mode=display">
+\frac{\partial p(x,t)}{\partial t} = - \frac{\partial}{\partial x} \left( A(x) p(x,t) \right) + \frac{1}{2} \frac{\partial^2}{\partial x^2}( B(x)^2 p(x,t)) = - \nabla \cdot \mathbf{J}
+</script>
+</div>
+</p>
+<blockquote>
+<p>FP 方程可以理解为<a href="[概率]概率的连续性公式.html">概率的连续性方程</a>。</p>
+</blockquote>
+<p>当<span class="MathJaxBox"><span class="MathJax_Preview">$\nabla \cdot \mathbf{J} = 0$</span><script type="math/tex">\nabla \cdot \mathbf{J} = 0</script></span>时，代表此时概率分布平衡，处于稳态，因此可以通过：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+- \frac{\partial}{\partial x} \left( A(x) p(x,t) \right) + \frac{1}{2} \frac{\partial^2}{\partial x^2}( B(x)^2 p(x,t)) = 0
+$$</span><script type="math/tex; mode=display">
+- \frac{\partial}{\partial x} \left( A(x) p(x,t) \right) + \frac{1}{2} \frac{\partial^2}{\partial x^2}( B(x)^2 p(x,t)) = 0
+</script>
+</div>
+</p>
+<p>来求解稳态<span class="MathJaxBox"><span class="MathJax_Preview">$p(x,t)$</span><script type="math/tex">p(x,t)</script></span>。</p>
+<h1 id="_4">可视化仿真</h1>
+<p>我们将上面的方程离散化：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\gamma(x_{t+1} - x_{t}) = -kx_t \Delta t + \sqrt{2\gamma k_B T}\Delta t \mathcal{N}(0,1) \\
+\Rightarrow x_{t+1} = x_t - \frac{k}{\gamma}x_t\Delta t + \sqrt{\frac{2 k_B T}{\gamma}}\Delta t \mathcal{N}(0,1)
+$$</span><script type="math/tex; mode=display">
+\gamma(x_{t+1} - x_{t}) = -kx_t \Delta t + \sqrt{2\gamma k_B T}\Delta t \mathcal{N}(0,1) \\
+\Rightarrow x_{t+1} = x_t - \frac{k}{\gamma}x_t\Delta t + \sqrt{\frac{2 k_B T}{\gamma}}\Delta t \mathcal{N}(0,1)
+</script>
+</div>
+</p>
+<p><img alt="粒子位置" src="随机过程：1.%20朗之万方程仿真/boltzmann_motion.png" /></p>
+<p><img alt="粒子位置分布" src="随机过程：1.%20朗之万方程仿真/boltzmann_distribution.png" /></p>
+<p>各态历经假说：</p>
+<p>简单来说，对于一个处于平衡态的系统，观察一个粒子在足够长的时间内经历的所有状态（时间平均），等效于在某一个瞬间观察一个由大量相同粒子组成的系综的所有可能状态（系综平均）。</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

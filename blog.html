@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/code.css">
+    <link rel="stylesheet" href="static/main.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Blog - Chestnut's Space</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <p class="text-red-500 text-base font-semibold">Blog</p>
+
+        </nav>
+    </header>
+
+    <main class="px-4">
+        <!-- 搜索和过滤区域 -->
+        <div class="mb-8">
+            <h1 class="text-3xl mb-6 text-gray-800">Articles</h1>
+            
+            <!-- 搜索框 -->
+            <div class="mb-6">
+                <input type="text" id="searchInput" placeholder="Search articles..." 
+                       class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+            
+            <!-- 标签过滤 -->
+            <div class="mb-6">
+                <h3 class="text-lg mb-3 text-gray-700">Filter by tags:</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterByTag('all')" class="tag-filter active px-3 py-1 bg-red-500 text-white rounded-full text-sm hover:bg-red-600 transition-colors">
+                        全部 (17)
+                    </button>
+                    
+                    <button onclick="filterByTag('Transformer')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        Transformer
+                    </button>
+                    
+                    <button onclick="filterByTag('不等式')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        不等式
+                    </button>
+                    
+                    <button onclick="filterByTag('优化')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        优化
+                    </button>
+                    
+                    <button onclick="filterByTag('位置编码')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        位置编码
+                    </button>
+                    
+                    <button onclick="filterByTag('奇异值分解')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        奇异值分解
+                    </button>
+                    
+                    <button onclick="filterByTag('并行策略')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        并行策略
+                    </button>
+                    
+                    <button onclick="filterByTag('强化学习')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        强化学习
+                    </button>
+                    
+                    <button onclick="filterByTag('归一化')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        归一化
+                    </button>
+                    
+                    <button onclick="filterByTag('极大似然估计')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        极大似然估计
+                    </button>
+                    
+                    <button onclick="filterByTag('概率')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        概率
+                    </button>
+                    
+                    <button onclick="filterByTag('概率密度传输')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        概率密度传输
+                    </button>
+                    
+                    <button onclick="filterByTag('生成模型')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        生成模型
+                    </button>
+                    
+                    <button onclick="filterByTag('连续性方程')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        连续性方程
+                    </button>
+                    
+                    <button onclick="filterByTag('随机过程')" class="tag-filter px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors">
+                        随机过程
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- 文章列表 -->
+        <div id="articlesList">
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="随机过程" 
+                     data-title="随机过程：1. 朗之万方程仿真" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/随机过程：1. 朗之万方程仿真.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            随机过程：1. 朗之万方程仿真
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-20</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">随机过程</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="概率,连续性方程,概率密度传输" 
+                     data-title="【概率】概率密度传输" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[概率]概率的连续性公式.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【概率】概率密度传输
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-20</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">概率</span>
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">连续性方程</span>
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">概率密度传输</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="生成模型" 
+                     data-title="生成模型：1. 生成模型建模" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/生成模型：2. 引导生成.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            生成模型：1. 生成模型建模
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-20</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">生成模型</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="强化学习" 
+                     data-title="强化学习：如何理解价值、优势、奖励和回报" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/强化学习：如何理解价值、优势和回报 .html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            强化学习：如何理解价值、优势、奖励和回报
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-19</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">强化学习</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="生成模型" 
+                     data-title="生成模型：1. 生成模型建模" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/生成模型：1. 生成模型建模.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            生成模型：1. 生成模型建模
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-18</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">生成模型</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="不等式" 
+                     data-title="不等式：2. jensen不等式" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/不等式：2. Jensen不等式.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            不等式：2. Jensen不等式
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-18</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">不等式</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="优化,极大似然估计" 
+                     data-title="高斯极大似然估计与mse等价" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/高斯极大似然估计与MSE等价.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            高斯极大似然估计与MSE等价
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-16</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">优化</span>
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">极大似然估计</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="强化学习" 
+                     data-title="强化学习：1. 策略梯度算法" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/强化学习：1. 策略梯度算法.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            强化学习：1. 策略梯度算法
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-16</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">强化学习</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="不等式" 
+                     data-title="不等式：1. holder不等式" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/不等式：1. Holder不等式.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            不等式：1. Holder不等式
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">不等式</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="优化" 
+                     data-title="【短记】随着batch size增大如何调整学习率" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[短记]随着batchsize增大如何调整学习率.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【短记】随着batch size增大如何调整学习率
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">优化</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="优化" 
+                     data-title="【短记】证明最小二乘法预测目标值的条件期望" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[短记]证明最小二乘法预测目标值均值.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【短记】证明最小二乘法预测目标值的条件期望
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">优化</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="Transformer,归一化" 
+                     data-title="【短记】大模型中normalize方式的影响" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[短记]大模型中Normalize方式的影响.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【短记】大模型中Normalize方式的影响
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">Transformer</span>
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">归一化</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="奇异值分解" 
+                     data-title="【矩阵】奇异值分解" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[矩阵]奇异值分解.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【矩阵】奇异值分解
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">奇异值分解</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="概率" 
+                     data-title="【概率】如何拟合一个随机变量的期望" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[概率]如何拟合一个随机变量的期望.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【概率】如何拟合一个随机变量的期望
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">概率</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="概率" 
+                     data-title="【概率】z=xy的pdf" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[概率]Z=XY的PDF.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【概率】Z=XY的PDF
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">概率</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="并行策略" 
+                     data-title="【并行策略】为什么split和gather实现序列并行之后要对梯度进行缩放" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[并行策略]为什么Split和Gather实现序列并行之后要对梯度进行缩放.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【并行策略】为什么Split和Gather实现序列并行之后要对梯度进行缩放
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">并行策略</span>
+                    
+                </div>
+            </article>
+            
+            <article class="article-item mb-8 p-6 bg-gray-50 rounded-lg" 
+                     data-tags="Transformer,位置编码" 
+                     data-title="【transformer#1】各种位置编码" 
+                     data-preview="...">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                    <h2 class="text-xl font-semibold mb-2 md:mb-0">
+                        <a href="pages/[Transformer]各种位置编码.html" class="text-gray-800 hover:text-red-500 transition-colors no-underline">
+                            【Transformer#1】各种位置编码
+                        </a>
+                    </h2>
+                    <time class="text-gray-500 text-sm whitespace-nowrap md:ml-5">2025-08-15</time>
+                </div>
+                
+                <div class="flex flex-wrap gap-2">
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">Transformer</span>
+                    
+                    <span class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">位置编码</span>
+                    
+                </div>
+            </article>
+            
+        </div>
+
+        <!-- 分页控件 -->
+        <div id="pagination" class="flex justify-center items-center mt-8 mb-12">
+            <button id="prevBtn" onclick="changePage(-1)" class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                上一页
+            </button>
+            <div id="pageNumbers" class="flex mx-4">
+                <!-- 页码将通过JavaScript动态生成 -->
+            </div>
+            <button id="nextBtn" onclick="changePage(1)" class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                下一页
+            </button>
+        </div>
+
+        <!-- 文章统计信息 -->
+        <div class="text-center text-gray-500 text-sm mb-8">
+            <span id="articleCount">共 17 篇文章</span>
+            <span id="filteredCount" class="hidden"></span>
+        </div>
+    </main>
+
+    <script>
+        // 分页和搜索功能
+        let currentPage = 1;
+        const articlesPerPage = 10;
+        let filteredArticles = [];
+        let allArticles = [];
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            allArticles = Array.from(document.querySelectorAll('.article-item'));
+            filteredArticles = [...allArticles];
+            updateDisplay();
+        });
+
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filterArticles(searchTerm);
+        });
+
+        // 按标签过滤
+        function filterByTag(tag) {
+            // 更新标签按钮状态
+            document.querySelectorAll('.tag-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-red-500', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            event.target.classList.add('active', 'bg-red-500', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            filterArticles(searchTerm, tag);
+        }
+
+        // 过滤文章
+        function filterArticles(searchTerm = '', selectedTag = 'all') {
+            filteredArticles = allArticles.filter(article => {
+                const title = article.dataset.title;
+                const preview = article.dataset.preview;
+                const tags = article.dataset.tags;
+
+                const matchesSearch = !searchTerm || 
+                    title.includes(searchTerm) || 
+                    preview.includes(searchTerm);
+
+                const matchesTag = selectedTag === 'all' || 
+                    tags.split(',').includes(selectedTag);
+
+                return matchesSearch && matchesTag;
+            });
+
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        // 更新显示
+        function updateDisplay() {
+            // 隐藏所有文章
+            allArticles.forEach(article => {
+                article.style.display = 'none';
+            });
+
+            // 计算分页
+            const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+
+            // 显示当前页的文章
+            filteredArticles.slice(startIndex, endIndex).forEach(article => {
+                article.style.display = 'block';
+            });
+
+            // 更新分页控件
+            updatePagination(totalPages);
+
+            // 更新文章计数
+            updateArticleCount();
+        }
+
+        // 更新分页控件
+        function updatePagination(totalPages) {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const pageNumbers = document.getElementById('pageNumbers');
+
+            // 更新按钮状态
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+            // 生成页码
+            pageNumbers.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    pageBtn.className = `px-3 py-1 mx-1 rounded ${
+                        i === currentPage 
+                            ? 'bg-red-500 text-white' 
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    } transition-colors`;
+                    pageBtn.onclick = () => goToPage(i);
+                    pageNumbers.appendChild(pageBtn);
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.className = 'px-2 text-gray-500';
+                    pageNumbers.appendChild(ellipsis);
+                }
+            }
+        }
+
+        // 更新文章计数
+        function updateArticleCount() {
+            const totalCount = document.getElementById('articleCount');
+            const filteredCount = document.getElementById('filteredCount');
+
+            if (filteredArticles.length === allArticles.length) {
+                totalCount.style.display = 'inline';
+                filteredCount.style.display = 'none';
+            } else {
+                totalCount.style.display = 'none';
+                filteredCount.style.display = 'inline';
+                filteredCount.textContent = `找到 ${filteredArticles.length} 篇文章`;
+            }
+        }
+
+        // 翻页
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+            const newPage = currentPage + direction;
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                updateDisplay();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // 跳转到指定页
+        function goToPage(page) {
+            currentPage = page;
+            updateDisplay();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

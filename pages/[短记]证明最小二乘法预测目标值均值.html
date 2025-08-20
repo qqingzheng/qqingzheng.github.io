@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【短记】证明最小二乘法预测目标值的条件期望</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【短记】证明最小二乘法预测目标值的条件期望</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月15日14时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">问题描述与符号定义</h1>
+<p>最小二乘法在面对“逆问题”时会有挑战。比如说我有一个函数<span class="MathJaxBox"><span class="MathJax_Preview">$y=f(x)=x^2$</span><script type="math/tex">y=f(x)=x^2</script></span>，由于x和y之间不是双射，不存在逆映射<span class="MathJaxBox"><span class="MathJax_Preview">$f^{-1}$</span><script type="math/tex">f^{-1}</script></span>。而如果我使用最小二乘法，通过<span class="MathJaxBox"><span class="MathJax_Preview">$y$</span><script type="math/tex">y</script></span>预测<span class="MathJaxBox"><span class="MathJax_Preview">$x$</span><script type="math/tex">x</script></span>,预测结果会是y对应两个x的均值，导致结果不准确。</p>
+<p>考虑有自变量<span class="MathJaxBox"><span class="MathJax_Preview">$x = (x_1, x_2, ..., x_n)$</span><script type="math/tex">x = (x_1, x_2, ..., x_n)</script></span>，因变量<span class="MathJaxBox"><span class="MathJax_Preview">$y = (y_1, y_2, ..., y_n)$</span><script type="math/tex">y = (y_1, y_2, ..., y_n)</script></span>，我们希望找到一个函数<span class="MathJaxBox"><span class="MathJax_Preview">$f(x)$</span><script type="math/tex">f(x)</script></span>，使得<span class="MathJaxBox"><span class="MathJax_Preview">$f(x)$</span><script type="math/tex">f(x)</script></span>与<span class="MathJaxBox"><span class="MathJax_Preview">$y$</span><script type="math/tex">y</script></span>的均方误差最小。假设模型为线性模型，存在全局最优解。</p>
+<blockquote>
+<p>期望风险和经验风险：过去接触的最小二乘法是基于经验风险的，即基于样本数据的均方误差。这里要注意采样和分布的区别。由于经验风险是期望风险的无偏估计，所以在样本量足够大的情况下，经验风险和期望风险的差异会收敛到0。</p>
+</blockquote>
+<p>理想情况下，我们希望最小化期望风险：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\min_{f} E =  \int\int (y - f(x))^2 p(x, y) \mathrm{d}x \mathrm{d}y
+$$</span><script type="math/tex; mode=display">
+\min_{f} E =  \int\int (y - f(x))^2 p(x, y) \mathrm{d}x \mathrm{d}y
+</script>
+</div>
+</p>
+<h1 id="_2">证明</h1>
+<p>由于存在全局最优解，那我们希望通过梯度为0找到极值点，该点即为全局最优解：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\frac{\partial E}{\partial f} = 2\int\int (y - f(x)) p(x, y) \mathrm{d}x \mathrm{d}y = 0
+$$</span><script type="math/tex; mode=display">
+\frac{\partial E}{\partial f} = 2\int\int (y - f(x)) p(x, y) \mathrm{d}x \mathrm{d}y = 0
+</script>
+</div>
+</p>
+<p>观察这个式子，我们可以把<span class="MathJaxBox"><span class="MathJax_Preview">$y$</span><script type="math/tex">y</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$f(x)$</span><script type="math/tex">f(x)</script></span>放在等号两边，得到：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\int\int y p(x, y) \mathrm{d}x \mathrm{d}y = \int\int f(x) p(x, y) \mathrm{d}x \mathrm{d}y \\ \Rightarrow
+\int\int y p(y|x) p(x) \mathrm{d}x \mathrm{d}y = \int\int f(x) p(y|x) p(x) \mathrm{d}x \mathrm{d}y \\ \Rightarrow
+\int p(x) \mathrm{d}x \int y p(y|x) \mathrm{d}y = \int\int f(x) p(x) \mathrm{d}x \int p(y|x)\mathrm{d}y \\ \Rightarrow
+\mathbb{E}_{y\sim p(y|x)}[y] = \mathbb{E}[f(x)]
+$$</span><script type="math/tex; mode=display">
+\int\int y p(x, y) \mathrm{d}x \mathrm{d}y = \int\int f(x) p(x, y) \mathrm{d}x \mathrm{d}y \\ \Rightarrow
+\int\int y p(y|x) p(x) \mathrm{d}x \mathrm{d}y = \int\int f(x) p(y|x) p(x) \mathrm{d}x \mathrm{d}y \\ \Rightarrow
+\int p(x) \mathrm{d}x \int y p(y|x) \mathrm{d}y = \int\int f(x) p(x) \mathrm{d}x \int p(y|x)\mathrm{d}y \\ \Rightarrow
+\mathbb{E}_{y\sim p(y|x)}[y] = \mathbb{E}[f(x)]
+</script>
+</div>
+</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【矩阵】奇异值分解</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【矩阵】奇异值分解</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月15日14时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">特征值</h1>
+<p>对于方阵<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{A}$</span><script type="math/tex">\mathbf{A}</script></span>，在几何意义上可以表示成线性变换（基变换）。例如：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{A} = \begin{pmatrix}
+1 &amp; 2 \\
+3 &amp; 4
+\end{pmatrix}
+$$</span><script type="math/tex; mode=display">
+\mathbf{A} = \begin{pmatrix}
+1 & 2 \\
+3 & 4
+\end{pmatrix}
+</script>
+</div>
+</p>
+<p>我们考虑一个圆。在这个圆中，所有的矩阵乘都可以简单理解为对这个圆的“挤压”和“翻转”。那很自然的想到，把这个圆变换成“椭圆”，那在长轴和短轴部分是不会“旋转”的，只有简单的“伸缩”。并且我们只需要知道长轴和短轴的伸缩程度，就可以知道这个线性变换的全部信息。</p>
+<p><img alt="对于矩阵A对单位圆变换的可视化结果" src="/assets/[矩阵]奇异值分解/matrix_transform.gif" /></p>
+<p>因此，我们把单位长度的长轴和短轴称为<strong>特征向量</strong><span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{v}$</span><script type="math/tex">\mathbf{v}</script></span>，而长轴和短轴的模称为<strong>特征值</strong><span class="MathJaxBox"><span class="MathJax_Preview">$\lambda$</span><script type="math/tex">\lambda</script></span>。</p>
+<p>这里我们通过 python 的 numpy 库来计算特征值和特征向量：</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 定义矩阵A</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="c1"># 计算特征值和特征向量</span>
+<span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+
+<p>特征值为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\lambda_1 = -0.3723, \lambda_2 = 5.3722
+$$</span><script type="math/tex; mode=display">
+\lambda_1 = -0.3723, \lambda_2 = 5.3722
+</script>
+</div>
+</p>
+<p>特征向量为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{v}_1 = \begin{pmatrix}
+-0.82456484 \\
+0.56576746 \\
+\end{pmatrix}, \mathbf{v}_2 = \begin{pmatrix}
+-0.41597356 \\
+-0.90937671 \\
+\end{pmatrix}
+\\
+\mathbf{P} = \begin{pmatrix}
+\mathbf{v}_1 &amp; \mathbf{v}_2
+\end{pmatrix}
+$$</span><script type="math/tex; mode=display">
+\mathbf{v}_1 = \begin{pmatrix}
+-0.82456484 \\
+0.56576746 \\
+\end{pmatrix}, \mathbf{v}_2 = \begin{pmatrix}
+-0.41597356 \\
+-0.90937671 \\
+\end{pmatrix}
+\\
+\mathbf{P} = \begin{pmatrix}
+\mathbf{v}_1 & \mathbf{v}_2
+\end{pmatrix}
+</script>
+</div>
+</p>
+<p>因此这个变换<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{A}$</span><script type="math/tex">\mathbf{A}</script></span>可以由特征向量的伸缩完全表示：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{A}\mathbf{P} = \mathbf{P}\mathbf{D} \Rightarrow \mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}
+$$</span><script type="math/tex; mode=display">
+\mathbf{A}\mathbf{P} = \mathbf{P}\mathbf{D} \Rightarrow \mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}
+</script>
+</div>
+</p>
+<blockquote>
+<p>如果<span class="MathJaxBox"><span class="MathJax_Preview">$A$</span><script type="math/tex">A</script></span>是正交矩阵，那不存在实数特征值。</p>
+</blockquote>
+<h1 id="_2">特征值分解</h1>
+<p>基于上面的案例，我们考虑泛化的情况。有方阵<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{A} \in \mathbb{R}^{n \times n}$</span><script type="math/tex">\mathbf{A} \in \mathbb{R}^{n \times n}</script></span>，特征值分解为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}
+$$</span><script type="math/tex; mode=display">
+\mathbf{A} = \mathbf{P}\mathbf{D}\mathbf{P}^{-1}
+</script>
+</div>
+</p>
+<p>而能够被特征值分解的矩阵，充分必要条件如下：有<span class="MathJaxBox"><span class="MathJax_Preview">$n$</span><script type="math/tex">n</script></span>个线性无关的特征向量。</p>
+<h1 id="_3">奇异值分解</h1>
+<h1 id="_4">实际应用</h1>
+<h2 id="_5">特征值分解实现灰度图压缩</h2>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>

@@ -1,0 +1,224 @@
+/* Header Styles */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.brand-name {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.brand-tagline {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+    letter-spacing: 2px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #e74c3c;
+}
+
+/* Profile Section */
+.profile-section {
+    margin-bottom: 50px;
+}
+
+.profile-section h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-links {
+    display: flex;
+    gap: 15px;
+}
+
+.profile-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.profile-links a:hover {
+    color: #e74c3c;
+}
+
+/* Section Styles */
+.projects-section,
+.papers-section,
+.articles-section {
+    margin-bottom: 50px;
+}
+
+.projects-section h2,
+.papers-section h2,
+.articles-section h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 10px;
+}
+
+/* Project Styles */
+.project {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.project-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.project-title a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.project-title a:hover {
+    color: #e74c3c;
+}
+
+.project-description {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Paper Styles */
+.note {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.paper {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-left: 4px solid #e74c3c;
+    background-color: #fafafa;
+}
+
+.conference-tag {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.paper-title {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.paper-title:hover {
+    color: #e74c3c;
+}
+
+.authors {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Article Styles */
+.article-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.article-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.article-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.article-title a:hover {
+    color: #e74c3c;
+}
+
+.article-date {
+    color: #999;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-left: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .main-nav {
+        gap: 20px;
+    }
+    
+    .article-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .article-date {
+        margin-left: 0;
+    }
+    
+    .profile-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .brand-name {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+}

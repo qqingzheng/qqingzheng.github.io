@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/code.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <style>
+        @layer utilities {
+            .markdown {
+                background-color: #ffffff !important;
+                color: #374151 !important;
+                line-height: 1.75 !important;
+            }
+            
+            .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+                color: #111827 !important;
+                font-weight: 600 !important;
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .markdown h1 {
+                font-size: 1.875rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .markdown h2 {
+                font-size: 1.5rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            .markdown h3 {
+                font-size: 1.25rem !important;
+                line-height: 1.4 !important;
+            }
+            
+            .markdown p {
+                margin-bottom: 1.25rem !important;
+            }
+            
+            .markdown a {
+                color: #ef4444 !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+            }
+            
+            .markdown a:hover {
+                color: #dc2626 !important;
+                text-decoration: underline !important;
+            }
+        }
+    </style>
+    <title>【Transformer#1】各种位置编码</title>
+</head>
+
+<body class="bg-white text-gray-900 font-sans max-w-screen mx-auto">
+    <!-- 添加与blog.html一致的header -->
+    <header class="flex flex-row justify-between items-center py-5 border-b border-gray-200 mb-10 px-4">
+        <div class="flex flex-col items-start mb-5 md:mb-0">
+            <span class="bg-red-500 text-white px-4 py-2 font-bold text-lg tracking-wide">CHESTNUT</span>
+            <span class="text-xs text-gray-500 mt-1 tracking-widest">CODE IS POETRY</span>
+        </div>
+        <nav class="flex flex-row gap-4 md:gap-8">
+            <a href="/index.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Profile</a>
+            <a href="/blog.html" class="text-gray-700 text-base hover:text-red-500 transition-colors duration-300">Blog</a>
+        </nav>
+    </header>
+
+    <!-- 优化的文章内容区域 -->
+    <main class="px-4">
+        <!-- 文章标题和元信息 -->
+        <article class="mb-12">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">【Transformer#1】各种位置编码</h1>
+                <div class="flex justify-center items-center text-gray-500 text-sm">
+                    <time class="bg-gray-100 px-3 py-1 rounded-full">08月15日13时</time>
+                </div>
+            </header>
+            
+            <!-- 文章内容 -->
+            <div class="flex-row markdown">
+                <h1 id="_1">建立时序关系</h1>
+<p>在Transformer中，我们希望建立token之间的时序关系。但是由于Attention：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+Attention(Q,K,V) = softmax(\frac{Q K^T}{\sqrt{d_k}})V
+$$</span><script type="math/tex; mode=display">
+Attention(Q,K,V) = softmax(\frac{Q K^T}{\sqrt{d_k}})V
+</script>
+</div>
+</p>
+<p>在token上是全对称的，也就是<span class="MathJaxBox"><span class="MathJax_Preview">$f(\mathbf{x}, \mathbf{y}) = f(\mathbf{y}, \mathbf{x})$</span><script type="math/tex">f(\mathbf{x}, \mathbf{y}) = f(\mathbf{y}, \mathbf{x})</script></span>。因此，我们需要位置编码来引入时序关系：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n) != f(\mathbf{y} + \mathbf{p}_m, \mathbf{x} + \mathbf{p}_n)
+$$</span><script type="math/tex; mode=display">
+f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n) != f(\mathbf{y} + \mathbf{p}_m, \mathbf{x} + \mathbf{p}_n)
+</script>
+</div>
+</p>
+<h1 id="_2">构建位置编码</h1>
+<p>我们的位置编码有三个目标：</p>
+<ol>
+<li>去除Attention的全对称关系。</li>
+<li>引入时序关系。</li>
+<li>距离遗忘。（距离远的token，位置向量内积值要小）</li>
+</ol>
+<h2 id="_3">注意力内积</h2>
+<p>Attention其实是计算两个向量之间的内积来作为注意力权重。因此，加上位置编码后，<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{x}$</span><script type="math/tex">\mathbf{x}</script></span>与<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{y}$</span><script type="math/tex">\mathbf{y}</script></span>的内积为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\begin{equation}
+&lt;\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n&gt; = &lt;\mathbf{x}, \mathbf{y}&gt; + &lt;\mathbf{x}, \mathbf{p}_n&gt; + &lt;\mathbf{y}, \mathbf{p}_m&gt; + &lt;\mathbf{p}_m, \mathbf{p}_n&gt; \\ = \mathbf{x}^T \mathbf{y} + \mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m + \mathbf{p}_m^T \mathbf{p}_n
+\label{eq:0}
+\end{equation}
+$$</span><script type="math/tex; mode=display">
+\begin{equation}
+<\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n> = <\mathbf{x}, \mathbf{y}> + <\mathbf{x}, \mathbf{p}_n> + <\mathbf{y}, \mathbf{p}_m> + <\mathbf{p}_m, \mathbf{p}_n> \\ = \mathbf{x}^T \mathbf{y} + \mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m + \mathbf{p}_m^T \mathbf{p}_n
+\label{eq:0}
+\end{equation}
+</script>
+</div>
+</p>
+<p><span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m$</span><script type="math/tex">\mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m</script></span>这一项代表是自身向量在其他位置的位置向量的映射，它与自身向量的大小和方向有关，不是与位置唯一相关。<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p}_m^T \mathbf{p}_n$</span><script type="math/tex">\mathbf{p}_m^T \mathbf{p}_n</script></span>则是两个位置的位置向量内积，与位置唯一相关。</p>
+<h2 id="_4">将位置编码视为扰动</h2>
+<blockquote>
+<p>视为扰动的思路来自苏神博客。</p>
+</blockquote>
+<p>如果我们认为<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p} &lt;&lt; \mathbf{x}$</span><script type="math/tex">\mathbf{p} << \mathbf{x}</script></span>，<span class="MathJaxBox"><span class="MathJax_Preview">$f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n)$</span><script type="math/tex">f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n)</script></span>可以在<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{x}$</span><script type="math/tex">\mathbf{x}</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{y}$</span><script type="math/tex">\mathbf{y}</script></span>处泰勒展开来做二阶的近似：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\begin{equation}
+f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n) \approx f(\mathbf{x}, \mathbf{y}) + \mathbf{p}_m^T \nabla_x f + \mathbf{p}_n^T \nabla_y f + \\ \frac{1}{2}( \mathbf{p}_m^T H_x \mathbf{p}_m +  \mathbf{p}_n^T H_y \mathbf{p}_n + 2 \mathbf{p}_m^T H_{xy} \mathbf{p}_n  ) \\
+= f(\mathbf{x}, \mathbf{y}) + \mathbf{p}_m^T \nabla_x f + \mathbf{p}_n^T \nabla_y f + \\ \frac{1}{2}\mathbf{p}_m^T H_x \mathbf{p}_m +  \frac{1}{2} \mathbf{p}_n^T H_y \mathbf{p}_n + \mathbf{p}_m^T H_{xy} \mathbf{p}_n
+\
+\label{eq:1}
+\end{equation}
+$$</span><script type="math/tex; mode=display">
+\begin{equation}
+f(\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n) \approx f(\mathbf{x}, \mathbf{y}) + \mathbf{p}_m^T \nabla_x f + \mathbf{p}_n^T \nabla_y f + \\ \frac{1}{2}( \mathbf{p}_m^T H_x \mathbf{p}_m +  \mathbf{p}_n^T H_y \mathbf{p}_n + 2 \mathbf{p}_m^T H_{xy} \mathbf{p}_n  ) \\
+= f(\mathbf{x}, \mathbf{y}) + \mathbf{p}_m^T \nabla_x f + \mathbf{p}_n^T \nabla_y f + \\ \frac{1}{2}\mathbf{p}_m^T H_x \mathbf{p}_m +  \frac{1}{2} \mathbf{p}_n^T H_y \mathbf{p}_n + \mathbf{p}_m^T H_{xy} \mathbf{p}_n
+\
+\label{eq:1}
+\end{equation}
+</script>
+</div>
+</p>
+<p>当<span class="MathJaxBox"><span class="MathJax_Preview">$H_{xy}=I$</span><script type="math/tex">H_{xy}=I</script></span>时，\eqref{eq:1}可以与“注意力内积”部分有类似的结论。</p>
+<h1 id="alibi">ALiBi位置编码</h1>
+<p>\eqref{eq:0}可以很自然地改写为：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\begin{equation}
+&lt;\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n&gt; =  &lt;\mathbf{x}, \mathbf{y}&gt; + \mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m + \mathbf{p}_m^T \mathbf{p}_n \\
+\approx &lt;\mathbf{x}, \mathbf{y}&gt; + \mathbf{p}_m^T \mathbf{p}_n = &lt;\mathbf{x}, \mathbf{y}&gt; + \mathbf{P}
+\label{eq:2}
+\end{equation}
+$$</span><script type="math/tex; mode=display">
+\begin{equation}
+<\mathbf{x} + \mathbf{p}_m, \mathbf{y} + \mathbf{p}_n> =  <\mathbf{x}, \mathbf{y}> + \mathbf{x}^T \mathbf{p}_n + \mathbf{y}^T \mathbf{p}_m + \mathbf{p}_m^T \mathbf{p}_n \\
+\approx <\mathbf{x}, \mathbf{y}> + \mathbf{p}_m^T \mathbf{p}_n = <\mathbf{x}, \mathbf{y}> + \mathbf{P}
+\label{eq:2}
+\end{equation}
+</script>
+</div>
+</p>
+<p>为了实现位置编码的三个目标。ALiBi编码采用了最朴素的方法，其实也最符合一拍脑袋就想到的直觉：用位置的序号差来构成位置编码矩阵<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{P}$</span><script type="math/tex">\mathbf{P}</script></span>，再乘以一个权重<span class="MathJaxBox"><span class="MathJax_Preview">$m$</span><script type="math/tex">m</script></span>来调整数值大小。但是我不清楚这样的方式是否会距离遗忘的特性，似乎仅满足了前两个目标。</p>
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; margin-right: 10px; text-align: center;">
+    <img src="/assets/[Transformer]各种位置编码/alibi.png" alt="Image 1" style="width: 50%;">
+    <p style="color: gray; font-size: 0.9em;">ALiBi位置编码</p>
+  </div>
+</div>
+
+<h1 id="sinusoidal">Sinusoidal位置编码</h1>
+<p>Sinusodial位置编码在Transformer开山论文中提出：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\begin{cases}
+\mathbf{p}_{k,2i} = sin(\frac{k}{10000^{2i/d}}) \\
+\mathbf{p}_{k,2i+1} = cos(\frac{k}{10000^{2i/d}})
+\end{cases}
+$$</span><script type="math/tex; mode=display">
+\begin{cases}
+\mathbf{p}_{k,2i} = sin(\frac{k}{10000^{2i/d}}) \\
+\mathbf{p}_{k,2i+1} = cos(\frac{k}{10000^{2i/d}})
+\end{cases}
+</script>
+</div>
+</p>
+<p>接下来我们将推导上面的式子：</p>
+<p>为了推导便利，我们假设<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p}_m$</span><script type="math/tex">\mathbf{p}_m</script></span>和<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p}_n$</span><script type="math/tex">\mathbf{p}_n</script></span>的维度为2。我们希望<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p}_m^T \mathbf{p}_n$</span><script type="math/tex">\mathbf{p}_m^T \mathbf{p}_n</script></span>满足下面的条件：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\begin{cases}
+\underbrace{\mathbf{p}_m^T \mathbf{p}_n = f(m-n)}_\text{希望能表示相对位置} \\
+\underbrace{\mathbf{p}_m^T \mathbf{p}_n = 0, \quad |m - n| &gt;&gt; 0}_\text{距离越远的token，编码越接近0，具有遗忘能力}
+\end{cases}
+$$</span><script type="math/tex; mode=display">
+\begin{cases}
+\underbrace{\mathbf{p}_m^T \mathbf{p}_n = f(m-n)}_\text{希望能表示相对位置} \\
+\underbrace{\mathbf{p}_m^T \mathbf{p}_n = 0, \quad |m - n| >> 0}_\text{距离越远的token，编码越接近0，具有遗忘能力}
+\end{cases}
+</script>
+</div>
+</p>
+<p>当<span class="MathJaxBox"><span class="MathJax_Preview">$m=n时$</span><script type="math/tex">m=n时</script></span>，<span class="MathJaxBox"><span class="MathJax_Preview">$||\mathbf{p}_m||^2 = f(0) = 1$</span><script type="math/tex">||\mathbf{p}_m||^2 = f(0) = 1</script></span>。我们这里设</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+x \\ y
+\end{array}
+\right]
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+x \\ y
+\end{array}
+\right]
+</script>
+</div>
+</p>
+<p>那么可以得到<span class="MathJaxBox"><span class="MathJax_Preview">$x^2 + y^2 = 1$</span><script type="math/tex">x^2 + y^2 = 1</script></span>，在坐标平面上是一个圆。</p>
+<p>既然位置向量都在单位圆上，那么说明单位向量的不同旋转角度代表了不同的位置。所以不妨我们改写为极坐标系（<span class="MathJaxBox"><span class="MathJax_Preview">$r=1$</span><script type="math/tex">r=1</script></span>）：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+cos\theta_m \\ sin\theta_m
+\end{array}
+\right]
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+cos\theta_m \\ sin\theta_m
+\end{array}
+\right]
+</script>
+</div>
+</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m^T \mathbf{p}_n = cos\theta_m cos\theta_n + sin\theta_m sin\theta_n = cos(\theta_n - \theta_m) = cos(a(n-m))
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m^T \mathbf{p}_n = cos\theta_m cos\theta_n + sin\theta_m sin\theta_n = cos(\theta_n - \theta_m) = cos(a(n-m))
+</script>
+</div>
+</p>
+<p>当我们考虑更高维度时：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+cos \theta_{m,0} \\ sin\theta_{m,0} \\ \vdots \\ cos \theta_{m,[d/2]-1} \\ sin\theta_{m,[d/2] - 1}
+\end{array}
+\right]
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m =
+\left[
+\begin{array}{c}
+cos \theta_{m,0} \\ sin\theta_{m,0} \\ \vdots \\ cos \theta_{m,[d/2]-1} \\ sin\theta_{m,[d/2] - 1}
+\end{array}
+\right]
+</script>
+</div>
+</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m^T \mathbf{p}_n = \sum_{i=0}^{[d/2] - 1} cos(f(\frac{2i}{d})(n-m))
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m^T \mathbf{p}_n = \sum_{i=0}^{[d/2] - 1} cos(f(\frac{2i}{d})(n-m))
+</script>
+</div>
+</p>
+<p>为什么是<span class="MathJaxBox"><span class="MathJax_Preview">$f(\frac{2i}{d})$</span><script type="math/tex">f(\frac{2i}{d})</script></span>？因为<span class="MathJaxBox"><span class="MathJax_Preview">$\frac{2i}{d} \in [0, 1)$</span><script type="math/tex">\frac{2i}{d} \in [0, 1)</script></span>，这样便于改为积分的形式：</p>
+<p>
+<div class="MathJaxBox"><span class="MathJax_Preview">$$
+\mathbf{p}_m^T \mathbf{p}_n = \frac{d} {2} \sum_{i=0}^{[d/2] - 1} cos(f(\frac{2i}{d})(n-m)) \frac{2}{d} \\
+= \frac{d} {2} \int_{0}^{1} cos(f(t)(n-m)) dt
+$$</span><script type="math/tex; mode=display">
+\mathbf{p}_m^T \mathbf{p}_n = \frac{d} {2} \sum_{i=0}^{[d/2] - 1} cos(f(\frac{2i}{d})(n-m)) \frac{2}{d} \\
+= \frac{d} {2} \int_{0}^{1} cos(f(t)(n-m)) dt
+</script>
+</div>
+</p>
+<p>至于<span class="MathJaxBox"><span class="MathJax_Preview">$f(t)$</span><script type="math/tex">f(t)</script></span>函数如何确认，请转到<a href="https://spaces.ac.cn/archives/8231">这里</a>。我们直接对Transformer给出的<span class="MathJaxBox"><span class="MathJax_Preview">$f(t)=\frac{1}{10000^{t}}$</span><script type="math/tex">f(t)=\frac{1}{10000^{t}}</script></span>代入，然后可视化得到下面的图：</p>
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; margin-right: 10px; text-align: center;">
+    <img src="/assets/[Transformer]各种位置编码/fig1.png" alt="Image 1" style="width: 50%;">
+    <p style="color: gray; font-size: 0.9em;">对于底数的分析</p>
+  </div>
+</div>
+
+<p>可以发现，当<span class="MathJaxBox"><span class="MathJax_Preview">$f(t)=\frac{1}{10000^{t}}$</span><script type="math/tex">f(t)=\frac{1}{10000^{t}}</script></span>时，<span class="MathJaxBox"><span class="MathJax_Preview">$\mathbf{p}_m^T \mathbf{p}_n$</span><script type="math/tex">\mathbf{p}_m^T \mathbf{p}_n</script></span>满足了我们提到的三个目标。重要的是第三个目标，当距离很大时，距离向量内积接近0。</p>
+            </div>
+        </article>
+        
+        <!-- 返回按钮 -->
+        <div class="text-center mb-12">
+            <a href="/blog.html" class="inline-flex items-center px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Return to Blog
+            </a>
+        </div>
+    </main>
+
+    <!-- 优化的footer -->
+    <footer class="border-t border-gray-200 mt-16 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Chestnut's Space. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+<div class="flex justify-center">
+        <a href="https://clustrmaps.com/site/1c7n6" title="ClustrMaps">
+            <img src="//www.clustrmaps.com/map_v2.png?d=pLFrLfouNczNtEB6DR12mWL8r-BUUNxaAEk5egg-0_g&cl=ffffff" />
+        </a>
+</div>
+
+<style>
+    #MathJax_Message {
+        display: none!important;
+    }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" }
+      },
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"],
+      styles: {
+          '.MJXc-display, .mjx-chtml': { color: 'red' }
+        }
+    });
+
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://unpkg.com/mermaid@8.1.0/dist/mermaid.min.js"></script>
+
+</html>
